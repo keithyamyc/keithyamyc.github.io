@@ -1,0 +1,120 @@
+---
+interface Photo {
+  src: string;
+  title?: string;
+  caption: string;
+  location?: string;
+  frame?: string;
+  aspect?: 'landscape' | 'portrait' | 'square';
+}
+
+interface Props {
+  photos: Photo[];
+  id?: string;
+}
+const { photos, id = 'gallery' } = Astro.props;
+---
+
+<div class="gallery" data-gallery={id}>
+  {photos.map((photo, i) => (
+    <button
+      class:list={[
+        'gallery__item',
+        photo.aspect === 'portrait' && 'gallery__item--tall',
+        photo.aspect === 'square' && 'gallery__item--square',
+      ]}
+      type="button"
+      data-lightbox-index={i}
+      data-full={photo.src}
+      data-caption={photo.caption}
+      data-title={photo.frame ?? photo.title ?? ''}
+      aria-label={`Open photograph: ${photo.caption}`}
+    >
+      <img
+        src={photo.src}
+        alt={photo.caption}
+        loading={i < 3 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+      {photo.caption && <figcaption>{photo.caption}</figcaption>}
+    </button>
+  ))}
+</div>
+
+<div class="lightbox" data-lightbox data-open="false" aria-hidden="true" role="dialog" aria-label="Photograph viewer">
+  <div class="lightbox__stage">
+    <img data-lightbox-image src="" alt="" />
+  </div>
+  <div class="lightbox__bar">
+    <p data-lightbox-caption></p>
+    <div class="lightbox__controls">
+      <button type="button" data-lightbox-prev aria-label="Previous photograph">←</button>
+      <button type="button" data-lightbox-next aria-label="Next photograph">→</button>
+      <button type="button" data-lightbox-close aria-label="Close viewer">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const photos = JSON.parse(
+    document.currentScript?.getAttribute('data-photos') ??
+      '[]'
+  ) as { src: string; caption: string; title?: string }[];
+
+  const box = document.querySelector<HTMLElement>('[data-lightbox]');
+  const img = document.querySelector<HTMLImageElement>('[data-lightbox-image]');
+  const cap = document.querySelector<HTMLElement>('[data-lightbox-caption]');
+  const prev = document.querySelector<HTMLButtonElement>('[data-lightbox-prev]');
+  const next = document.querySelector<HTMLButtonElement>('[data-lightbox-next]');
+  const close = document.querySelector<HTMLButtonElement>('[data-lightbox-close]');
+
+  let index = 0;
+
+  if (photos.length === 0) {
+    // Fallback: build from the DOM if the inline manifest is unavailable.
+    document.querySelectorAll<HTMLElement>('[data-lightbox-index]').forEach((el) => {
+      photos.push({
+        src: el.getAttribute('data-full') ?? '',
+        caption: el.getAttribute('data-caption') ?? '',
+        title: el.getAttribute('data-title') ?? '',
+      });
+    });
+  }
+
+  function show(i: number) {
+    if (!box || !img || !cap || photos.length === 0) return;
+    index = (i + photos.length) % photos.length;
+    const photo = photos[index];
+    img.src = photo.src;
+    img.alt = photo.caption;
+    cap.textContent = [photo.title, photo.caption].filter(Boolean).join(' — ');
+    box.setAttribute('data-open', 'true');
+    box.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function hide() {
+    if (!box) return;
+    box.setAttribute('data-open', 'false');
+    box.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-lightbox-index]').forEach((el) => {
+    el.addEventListener('click', () => show(Number(el.getAttribute('data-lightbox-index'))));
+  });
+
+  prev?.addEventListener('click', () => show(index - 1));
+  next?.addEventListener('click', () => show(index + 1));
+  close?.addEventListener('click', hide);
+  box?.addEventListener('click', (e) => {
+    if (e.target === box) hide();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (box?.getAttribute('data-open') !== 'true') return;
+    if (e.key === 'Escape') hide();
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+</script>

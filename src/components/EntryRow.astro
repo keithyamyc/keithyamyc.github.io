@@ -1,0 +1,32 @@
+---
+import { formatDate } from '../lib/format';
+
+interface Props {
+  href: string;
+  date: Date;
+  title: string;
+  excerpt?: string;
+  badges?: string[];
+  lang?: string;
+}
+
+const { href, date, title, excerpt, badges = [], lang } = Astro.props;
+---
+
+<a class="entry" href={href}>
+  <div class="entry__date">
+    <strong>{date.getUTCDate()}</strong>
+    <span>{formatDate(date).split(' ').slice(0, 1)} {date.getUTCFullYear()}</span>
+  </div>
+  <div class="entry__body">
+    {badges.length > 0 && (
+      <div class="entry__badges">
+        {badges.map((badge) => <span class="badge">{badge}</span>)}
+        {lang && lang !== 'en' && <span class="badge badge--accent">{lang}</span>}
+      </div>
+    )}
+    <h3>{title}</h3>
+    {excerpt && <p>{excerpt}</p>}
+  </div>
+  <div class="entry__arrow" aria-hidden="true">→</div>
+</a>

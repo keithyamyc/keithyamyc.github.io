@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750">
+  <defs>
+    <linearGradient id="bamboo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7E8B6A"/>
+      <stop offset="100%" stop-color="#3E4A34"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="750" fill="url(#bamboo)"/>
+  <g stroke="#2C3626" stroke-width="14" opacity="0.85">
+    <line x1="120" y1="0" x2="70" y2="750"/>
+    <line x1="290" y1="0" x2="255" y2="750"/>
+    <line x1="470" y1="0" x2="445" y2="750"/>
+    <line x1="650" y1="0" x2="640" y2="750"/>
+    <line x1="830" y1="0" x2="835" y2="750"/>
+    <line x1="960" y1="0" x2="980" y2="750"/>
+  </g>
+  <g fill="#F0E9D2" opacity="0.55">
+    <ellipse cx="500" cy="180" rx="160" ry="70"/>
+    <ellipse cx="520" cy="330" rx="120" ry="50"/>
+    <ellipse cx="470" cy="470" rx="150" ry="60"/>
+  </g>
+  <g fill="#1F2619" opacity="0.5">
+    <ellipse cx="180" cy="120" rx="90" ry="26" transform="rotate(-18 180 120)"/>
+    <ellipse cx="360" cy="240" rx="70" ry="20" transform="rotate(12 360 240)"/>
+    <ellipse cx="700" cy="160" rx="80" ry="24" transform="rotate(-8 700 160)"/>
+    <ellipse cx="860" cy="380" rx="95" ry="26" transform="rotate(14 860 380)"/>
+  </g>
+</svg>

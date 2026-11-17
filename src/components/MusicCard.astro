@@ -1,0 +1,89 @@
+---
+import { formatDate, musicTypeLabel } from '../lib/format';
+
+interface Props {
+  href: string;
+  type: string;
+  title: string;
+  excerpt: string;
+  date: Date;
+  composers: string[];
+  performers: string[];
+}
+
+const { href, type, title, excerpt, date, composers, performers } = Astro.props;
+const head = composers[0] ?? performers[0] ?? 'Music';
+---
+
+<a class="card music-card" href={href}>
+  <div class="music-plate">
+    <span class="music-plate__type">{musicTypeLabel(type)}</span>
+    <span class="music-plate__name">{head}</span>
+    <span class="music-plate__rule"></span>
+  </div>
+  <div class="card__body">
+    <h3>{title}</h3>
+    <p>{excerpt}</p>
+    <div class="card__foot">
+      <span>{formatDate(date)}</span>
+      <span>{performers[0] ?? ''}</span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .music-plate {
+    aspect-ratio: 16 / 7;
+    background: var(--paper-sunk);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .music-plate::after {
+    content: '';
+    position: absolute;
+    inset: 0.5rem;
+    border: 1px solid var(--rule);
+    pointer-events: none;
+  }
+
+  .music-plate__type {
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .music-plate__name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.55rem;
+    line-height: 1.15;
+    color: var(--ink-soft);
+    max-width: 90%;
+  }
+
+  .music-plate__rule {
+    width: 2.2rem;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+
+  .music-card:hover .music-plate__name {
+    color: var(--accent);
+  }
+
+  .music-plate__name {
+    transition: color 0.25s var(--ease);
+  }
+</style>

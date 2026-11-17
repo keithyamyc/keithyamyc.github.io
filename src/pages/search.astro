@@ -1,0 +1,164 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Search" description="Search every entry on this site — writings, music, and film rolls.">
+  <div class="shell narrow">
+    <header class="page-head">
+      <p class="kicker">Search</p>
+      <h1>Find something</h1>
+      <p>
+        Searches every writing, concert note, recording review, and film roll. English and
+        Chinese both work — try a composer, a city, a court, or a book.
+      </p>
+    </header>
+
+    <div class="search-field" style="border: 1px solid var(--rule-strong); background: var(--paper-raised); border-radius: 2px">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="16.2" y1="16.2" x2="21" y2="21"></line>
+      </svg>
+      <input
+        type="search"
+        inputmode="search"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Search… 搜尋"
+        aria-label="Search query"
+        data-page-input
+        autofocus
+      />
+    </div>
+
+    <p class="small-meta" style="margin-top: 0.9rem" data-page-count>Loading index…</p>
+
+    <ul class="search-results" style="max-height: none; padding: 0; margin-top: 1.2rem" data-page-results></ul>
+  </div>
+</Base>
+
+<script>
+  type Doc = {
+    title: string;
+    url: string;
+    section: string;
+    category: string;
+    date: string;
+    lang: string;
+    text: string;
+  };
+
+  const input = document.querySelector<HTMLInputElement>('[data-page-input]');
+  const resultsEl = document.querySelector<HTMLUListElement>('[data-page-results]');
+  const countEl = document.querySelector<HTMLElement>('[data-page-count]');
+
+  let docs: Doc[] = [];
+
+  function escapeHtml(s: string) {
+    return s.replace(/[&<>"']/g, (c) =>
+      c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#39;'
+    );
+  }
+
+  function highlight(text: string, terms: string[]) {
+    let out = escapeHtml(text);
+    for (const term of terms) {
+      if (!term) continue;
+      const safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      out = out.replace(new RegExp(`(${safe})`, 'gi'), '<mark>$1</mark>');
+    }
+    return out;
+  }
+
+  function termsOf(query: string) {
+    return query.toLowerCase().split(/\s+/).map((t) => t.trim()).filter(Boolean);
+  }
+
+  function score(doc: Doc, ts: string[]) {
+    const hay = `${doc.title} ${doc.category} ${doc.section} ${doc.text}`.toLowerCase();
+    let total = 0;
+    for (const t of ts) {
+      if (!hay.includes(t)) return -1;
+      if (doc.title.toLowerCase().includes(t)) total += 8;
+      if (doc.category.toLowerCase().includes(t)) total += 3;
+      total += Math.min(hay.split(t).length - 1, 6);
+    }
+    return total;
+  }
+
+  function snippet(doc: Doc, ts: string[]) {
+    const text = doc.text;
+    const lower = text.toLowerCase();
+    let at = -1;
+    for (const t of ts) {
+      const idx = lower.indexOf(t);
+      if (idx !== -1 && (at === -1 || idx < at)) at = idx;
+    }
+    const start = Math.max(0, at === -1 ? 0 : at - 70);
+    const slice = text.slice(start, start + 220).trim();
+    return highlight(`${start > 0 ? '…' : ''}${slice}${text.length > start + 220 ? '…' : ''}`, ts);
+  }
+
+  function render(query: string) {
+    if (!resultsEl || !countEl) return;
+    const ts = termsOf(query);
+
+    if (ts.length === 0) {
+      resultsEl.innerHTML = '';
+      countEl.textContent = `${docs.length} entries indexed · type to search`;
+      return;
+    }
+
+    const found = docs
+      .map((doc) => ({ doc, s: score(doc, ts) }))
+      .filter((r) => r.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .map((r) => r.doc);
+
+    countEl.textContent = `${found.length} result${found.length === 1 ? '' : 's'} for “${query}”`;
+
+    if (found.length === 0) {
+      resultsEl.innerHTML = `<li class="search-empty">No entries match “${escapeHtml(
+        query
+      )}”. Try a shorter phrase, a composer, or a place.<br />沒有符合的結果。</li>`;
+      return;
+    }
+
+    resultsEl.innerHTML = found
+      .map(
+        (doc) => `<li>
+          <a class="search-result" href="${doc.url}">
+            <span class="search-result__top">
+              <span class="search-result__title">${highlight(doc.title, ts)}</span>
+              <span class="search-result__path">${escapeHtml(doc.section)}${doc.category ? ` · ${escapeHtml(doc.category)}` : ''}</span>
+            </span>
+            <span class="search-result__snippet">${snippet(doc, ts)}</span>
+          </a>
+        </li>`
+      )
+      .join('');
+  }
+
+  async function init() {
+    try {
+      const res = await fetch('/search-index.json');
+      docs = res.ok ? await res.json() : [];
+    } catch {
+      docs = [];
+    }
+
+    const q = new URLSearchParams(window.location.search).get('q') ?? '';
+    if (input) {
+      input.value = q;
+      input.addEventListener('input', () => {
+        render(input.value);
+        const url = new URL(window.location.href);
+        if (input.value) url.searchParams.set('q', input.value);
+        else url.searchParams.delete('q');
+        window.history.replaceState({}, '', url);
+      });
+    }
+    render(q);
+  }
+
+  init();
+</script>

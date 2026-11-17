@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#272420"/>
+      <stop offset="60%" stop-color="#3A332C"/>
+      <stop offset="100%" stop-color="#1E1B18"/>
+    </linearGradient>
+    <linearGradient id="shoji" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F2E8D5"/>
+      <stop offset="100%" stop-color="#D8C5A8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg2)"/>
+  <!-- Warm sunlight through Shoji screens -->
+  <g transform="translate(220, 90)">
+    <rect x="0" y="0" width="360" height="560" fill="url(#shoji)" opacity="0.92"/>
+    <rect x="380" y="0" width="360" height="560" fill="url(#shoji)" opacity="0.82"/>
+    <!-- Wooden lattice -->
+    <g stroke="#3A2E25" stroke-width="6">
+      <line x1="120" y1="0" x2="120" y2="560"/>
+      <line x1="240" y1="0" x2="240" y2="560"/>
+      <line x1="500" y1="0" x2="500" y2="560"/>
+      <line x1="620" y1="0" x2="620" y2="560"/>
+      <line x1="0" y1="140" x2="740" y2="140"/>
+      <line x1="0" y1="280" x2="740" y2="280"/>
+      <line x1="0" y1="420" x2="740" y2="420"/>
+    </g>
+    <!-- Garden shadow cast on screen -->
+    <path d="M460 560 Q520 360 660 220 Q600 390 690 560 Z" fill="#5C5042" opacity="0.25"/>
+  </g>
+  <!-- Tatami floor -->
+  <polygon points="0,650 1200,650 1200,800 0,800" fill="#4A4135"/>
+  <polygon points="220,650 960,650 1080,800 100,800" fill="#8C7A61" opacity="0.45"/>
+</svg>

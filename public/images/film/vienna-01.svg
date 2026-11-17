@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="bwSky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D4D2CE"/>
+      <stop offset="100%" stop-color="#EAE8E3"/>
+    </linearGradient>
+  </defs>
+  <!-- Ilford HP5 Monochrome Plate -->
+  <rect width="1200" height="800" fill="url(#bwSky)"/>
+  <!-- Classical colonnade & Vienna street perspective -->
+  <polygon points="0,0 340,180 340,640 0,760" fill="#2B2A28"/>
+  <polygon points="1200,0 860,180 860,640 1200,760" fill="#3B3A37"/>
+  <!-- Cobblestone wet reflection -->
+  <polygon points="0,760 340,640 860,640 1200,760 1200,800 0,800" fill="#52504C"/>
+  <!-- Distant dome & spire -->
+  <rect x="520" y="340" width="160" height="300" fill="#7A7873"/>
+  <path d="M520 340 Q600 230 680 340 Z" fill="#5E5C58"/>
+  <line x1="600" y1="180" x2="600" y2="250" stroke="#4A4845" stroke-width="5"/>
+  <!-- Solitary figure walking with violin case -->
+  <circle cx="585" cy="565" r="9" fill="#181715"/>
+  <path d="M576 576 L594 576 L598 630 L572 630 Z" fill="#181715"/>
+  <rect x="596" y="592" width="12" height="32" rx="4" fill="#2A2927"/>
+  <!-- Wet pavement shadow -->
+  <ellipse cx="585" cy="665" rx="14" ry="30" fill="#181715" opacity="0.35"/>
+</svg>

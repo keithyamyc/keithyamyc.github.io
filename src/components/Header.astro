@@ -1,0 +1,86 @@
+---
+import { SITE } from '../config/site';
+
+const path = Astro.url.pathname;
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/writings', label: 'Writings' },
+  { href: '/music', label: 'Music' },
+  { href: '/film', label: 'Film & Travel' },
+  { href: '/cv', label: 'About & CV' },
+];
+
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path === href || path.startsWith(`${href}/`);
+---
+
+<header class="site-header">
+  <div class="shell site-header__bar">
+    <a href="/" class="masthead" aria-label={`${SITE.title} — home`}>
+      {SITE.title}
+      <span>Notes &amp; Photography</span>
+    </a>
+
+    <button
+      class="icon-btn nav-toggle"
+      type="button"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <line x1="3" y1="7" x2="21" y2="7"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="17" x2="21" y2="17"></line>
+      </svg>
+    </button>
+
+    <nav class="nav" id="site-nav" data-nav aria-label="Primary">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          aria-current={isActive(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header-tools">
+      <button
+        class="icon-btn"
+        type="button"
+        aria-label="Search this site"
+        title="Search (press /)"
+        data-search-open
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"></circle>
+          <line x1="16.2" y1="16.2" x2="21" y2="21"></line>
+        </svg>
+      </button>
+      <button
+        class="icon-btn"
+        type="button"
+        aria-label="Toggle light and dark theme"
+        title="Toggle theme"
+        data-theme-toggle
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" data-theme-icon="moon">
+          <path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  const navToggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const nav = document.querySelector<HTMLElement>('[data-nav]');
+  navToggle?.addEventListener('click', () => {
+    const open = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', String(!open));
+    nav?.setAttribute('data-open', String(!open));
+  });
+</script>

@@ -1,0 +1,55 @@
+---
+interface Recording {
+  work: string;
+  performers: string;
+  conductor?: string;
+  orchestra?: string;
+  label: string;
+  catalogOrYear: string;
+  format?: string;
+}
+
+interface Props {
+  recording: Recording;
+}
+const { recording } = Astro.props;
+---
+
+<div class="meta-card">
+  <div class="meta-card__head">
+    <span>Recording — Disc File</span>
+    <span>{recording.catalogOrYear}</span>
+  </div>
+  <dl>
+    <div>
+      <dt>Work</dt>
+      <dd>{recording.work}</dd>
+    </div>
+    <div>
+      <dt>Performers</dt>
+      <dd>{recording.performers}</dd>
+    </div>
+    {recording.conductor && (
+      <div>
+        <dt>Conductor</dt>
+        <dd>{recording.conductor}</dd>
+      </div>
+    )}
+    {recording.orchestra && (
+      <div>
+        <dt>Orchestra</dt>
+        <dd>{recording.orchestra}</dd>
+      </div>
+    )}
+    <div>
+      <dt>Label</dt>
+      <dd>{recording.label}</dd>
+    </div>
+    {recording.format && (
+      <div>
+        <dt>Format</dt>
+        <dd>{recording.format}</dd>
+      </div>
+    )}
+  </dl>
+</div>

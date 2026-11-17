@@ -1,0 +1,62 @@
+---
+import { SITE } from '../config/site';
+
+interface Props {
+  term?: string;
+}
+const { term = '' } = Astro.props;
+const { repo, repoId, category, categoryId, enabled } = SITE.giscus;
+const configured = Boolean(enabled && repoId && categoryId);
+---
+
+<section class="comments" id="comments">
+  <h3>Comments</h3>
+
+  {
+    configured ? (
+      <div>
+        <script
+          is:inline
+          src="https://giscus.app/client.js"
+          data-repo={repo}
+          data-repo-id={repoId}
+          data-category={category}
+          data-category-id={categoryId}
+          data-mapping="pathname"
+          data-strict="0"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async
+        />
+      </div>
+    ) : (
+      <div class="comments__placeholder">
+        <p>
+          <strong>Comments are ready to switch on.</strong> This site uses Giscus, which
+          stores discussions in GitHub Discussions — free, ad-free, and no tracking.
+        </p>
+        <ol>
+          <li>Push this project to a public GitHub repository.</li>
+          <li>Enable <em>Discussions</em> in the repository settings.</li>
+          <li>
+            Install the <a href="https://github.com/apps/giscus" rel="noopener" target="_blank">Giscus app</a>
+            and copy your IDs from <a href="https://giscus.app" rel="noopener" target="_blank">giscus.app</a>.
+          </li>
+          <li>
+            Paste them into <code>giscus.repoId</code> and <code>giscus.categoryId</code> in
+            <code>src/config/site.ts</code>.
+          </li>
+        </ol>
+        <p style="margin-top: 0.9rem">
+          Until then, readers can always write to
+          <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.
+        </p>
+      </div>
+    )
+  }
+</section>

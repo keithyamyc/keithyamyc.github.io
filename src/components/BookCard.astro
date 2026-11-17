@@ -1,0 +1,42 @@
+---
+interface Book {
+  title: string;
+  author: string;
+  publisher?: string;
+  year?: string;
+  translator?: string;
+}
+interface Props {
+  book: Book;
+}
+const { book } = Astro.props;
+---
+
+<div class="meta-card">
+  <div class="meta-card__head">
+    <span>Reading — Book File</span>
+    <span>Notes</span>
+  </div>
+  <dl>
+    <div>
+      <dt>Title</dt>
+      <dd>{book.title}</dd>
+    </div>
+    <div>
+      <dt>Author</dt>
+      <dd>{book.author}</dd>
+    </div>
+    {book.translator && (
+      <div>
+        <dt>Translator</dt>
+        <dd>{book.translator}</dd>
+      </div>
+    )}
+    {book.publisher && (
+      <div>
+        <dt>Publisher</dt>
+        <dd>{book.publisher}{book.year ? `, ${book.year}` : ''}</dd>
+      </div>
+    )}
+  </dl>
+</div>

@@ -1,0 +1,243 @@
+---
+// Full-site search overlay. Index is generated at build time at /search-index.json
+---
+
+<div
+  class="search-overlay"
+  data-search-overlay
+  data-open="false"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Search this site"
+  hidden
+>
+  <div class="search-panel">
+    <div class="search-field">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"></circle>
+        <line x1="16.2" y1="16.2" x2="21" y2="21"></line>
+      </svg>
+      <input
+        type="search"
+        inputmode="search"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Search essays, music, film rolls… 搜尋文章"
+        aria-label="Search query"
+        data-search-input
+      />
+      <span class="search-hint">Esc</span>
+    </div>
+    <ul class="search-results" data-search-results aria-live="polite"></ul>
+    <div class="search-foot">
+      <span data-search-count>Type to search</span>
+      <span>↑ ↓ to move · ↵ to open</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Doc = {
+    title: string;
+    url: string;
+    section: string;
+    category: string;
+    date: string;
+    lang: string;
+    text: string;
+  };
+
+  const overlay = document.querySelector<HTMLElement>('[data-search-overlay]');
+  const input = document.querySelector<HTMLInputElement>('[data-search-input]');
+  const resultsEl = document.querySelector<HTMLUListElement>('[data-search-results]');
+  const countEl = document.querySelector<HTMLElement>('[data-search-count]');
+
+  let docs: Doc[] | null = null;
+  let loading: Promise<Doc[]> | null = null;
+  let active = -1;
+
+  async function loadIndex(): Promise<Doc[]> {
+    if (docs) return docs;
+    if (!loading) {
+      loading = fetch('/search-index.json')
+        .then((r) => (r.ok ? r.json() : []))
+        .then((data: Doc[]) => {
+          docs = data;
+          return data;
+        })
+        .catch(() => {
+          docs = [];
+          return [];
+        });
+    }
+    return loading;
+  }
+
+  function escapeHtml(s: string) {
+    return s.replace(/[&<>"']/g, (c) =>
+      c === '&' ? '&amp;' : c === '<' ? '&lt;' : c === '>' ? '&gt;' : c === '"' ? '&quot;' : '&#39;'
+    );
+  }
+
+  function highlight(text: string, terms: string[]) {
+    let out = escapeHtml(text);
+    for (const term of terms) {
+      if (!term) continue;
+      const safe = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      out = out.replace(new RegExp(`(${safe})`, 'gi'), '<mark>$1</mark>');
+    }
+    return out;
+  }
+
+  function terms(query: string): string[] {
+    return query
+      .toLowerCase()
+      .split(/\s+/)
+      .map((t) => t.trim())
+      .filter((t) => t.length > 0);
+  }
+
+  function score(doc: Doc, ts: string[]): number {
+    const hay = `${doc.title} ${doc.category} ${doc.section} ${doc.text}`.toLowerCase();
+    let total = 0;
+    for (const t of ts) {
+      if (!hay.includes(t)) return -1;
+      if (doc.title.toLowerCase().includes(t)) total += 8;
+      if (doc.category.toLowerCase().includes(t)) total += 3;
+      const matches = hay.split(t).length - 1;
+      total += Math.min(matches, 6);
+    }
+    return total;
+  }
+
+  function snippetFor(doc: Doc, ts: string[]) {
+    const text = doc.text;
+    const lower = text.toLowerCase();
+    let at = -1;
+    for (const t of ts) {
+      const idx = lower.indexOf(t);
+      if (idx !== -1 && (at === -1 || idx < at)) at = idx;
+    }
+    const start = Math.max(0, at === -1 ? 0 : at - 60);
+    const slice = text.slice(start, start + 190).trim();
+    return highlight(`${start > 0 ? '…' : ''}${slice}${text.length > start + 190 ? '…' : ''}`, ts);
+  }
+
+  function render(query: string) {
+    if (!input || !resultsEl || !countEl) return;
+    const ts = terms(query);
+    if (ts.length === 0) {
+      resultsEl.innerHTML = '';
+      countEl.textContent = docs ? `${docs.length} entries indexed` : 'Type to search';
+      return;
+    }
+    const found = (docs ?? [])
+      .map((doc) => ({ doc, s: score(doc, ts) }))
+      .filter((r) => r.s > 0)
+      .sort((a, b) => b.s - a.s)
+      .slice(0, 30)
+      .map((r) => r.doc);
+
+    active = -1;
+    if (found.length === 0) {
+      resultsEl.innerHTML = `<li class="search-empty">No entries match “${escapeHtml(
+        query
+      )}”. Try a composer, a city, or a shorter phrase.<br />沒有符合的文章，請嘗試其他關鍵詞。</li>`;
+      countEl.textContent = '0 results';
+      return;
+    }
+
+    resultsEl.innerHTML = found
+      .map(
+        (doc, i) => `<li>
+          <a class="search-result" href="${doc.url}" data-index="${i}">
+            <span class="search-result__top">
+              <span class="search-result__title">${highlight(doc.title, ts)}</span>
+              <span class="search-result__path">${escapeHtml(doc.section)}${doc.category ? ` · ${escapeHtml(doc.category)}` : ''}</span>
+            </span>
+            <span class="search-result__snippet">${snippetFor(doc, ts)}</span>
+          </a>
+        </li>`
+      )
+      .join('');
+
+    countEl.textContent = `${found.length} result${found.length === 1 ? '' : 's'}`;
+  }
+
+  function move(delta: number) {
+    if (!resultsEl) return;
+    const links = Array.from(resultsEl.querySelectorAll<HTMLAnchorElement>('a.search-result'));
+    if (links.length === 0) return;
+    active = (active + delta + links.length) % links.length;
+    links.forEach((l, i) => {
+      l.style.background = i === active ? 'var(--accent-wash)' : '';
+    });
+    links[active]?.scrollIntoView({ block: 'nearest' });
+  }
+
+  async function open() {
+    if (!overlay) return;
+    overlay.hidden = false;
+    overlay.setAttribute('data-open', 'true');
+    document.body.style.overflow = 'hidden';
+    await loadIndex();
+    input?.focus();
+    render(input?.value ?? '');
+  }
+
+  function close() {
+    if (!overlay) return;
+    overlay.setAttribute('data-open', 'false');
+    overlay.hidden = true;
+    document.body.style.overflow = '';
+    if (input) input.value = '';
+    active = -1;
+  }
+
+  document.querySelectorAll('[data-search-open]').forEach((btn) =>
+    btn.addEventListener('click', () => open())
+  );
+
+  overlay?.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+
+  input?.addEventListener('input', () => render(input.value));
+
+  input?.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      move(1);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      move(-1);
+    } else if (e.key === 'Enter') {
+      const links = resultsEl?.querySelectorAll<HTMLAnchorElement>('a.search-result');
+      const target = active >= 0 ? links?.[active] : links?.[0];
+      if (target) {
+        e.preventDefault();
+        window.location.href = target.href;
+      }
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const isTyping =
+      e.target instanceof HTMLElement &&
+      (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable);
+
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      overlay?.getAttribute('data-open') === 'true' ? close() : open();
+      return;
+    }
+    if (e.key === 'Escape' && overlay?.getAttribute('data-open') === 'true') {
+      close();
+      return;
+    }
+    if (e.key === '/' && !isTyping) {
+      e.preventDefault();
+      open();
+    }
+  });
+</script>

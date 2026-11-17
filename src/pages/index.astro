@@ -1,0 +1,197 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import EntryRow from '../components/EntryRow.astro';
+import MusicCard from '../components/MusicCard.astro';
+import { SITE } from '../config/site';
+import { categoryLabel, readingTime, trackLabel, langLabel } from '../lib/format';
+
+const writings = (await getCollection('writings')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const music = (await getCollection('music')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const film = (await getCollection('film')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const professional = writings.filter((w) => w.data.track === 'professional').slice(0, 3);
+const personal = writings.filter((w) => w.data.track === 'personal').slice(0, 3);
+const recentMusic = music.slice(0, 3);
+const latestRoll = film[0];
+const featured = writings.find((w) => w.data.featured);
+---
+
+<Base>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <p class="kicker">Hong Kong · London</p>
+        <h1>
+          Law, cities,<br />
+          and the music<br />
+          that <em>outlasts</em> them.
+        </h1>
+        <p>
+          I am Keith Yam. I write commentaries and legal essays, keep diaries and
+          notebooks, review concerts and recordings, and photograph what I see on film
+          three or four times a year.
+        </p>
+        <p class="hero-nav">
+          <a href="/writings">Read the writings</a>
+          <a href="/music">Music notes</a>
+          <a href="/cv">About &amp; CV</a>
+        </p>
+      </div>
+
+      <aside class="hero__aside">
+        <dl>
+          <div>
+            <dt>Writing</dt>
+            <dd>Commentary, law, essays, diaries — in English and Chinese.</dd>
+          </div>
+          <div>
+            <dt>Listening</dt>
+            <dd>Mahler, Bruckner, Schubert. Mostly slow movements.</dd>
+          </div>
+          <div>
+            <dt>Looking</dt>
+            <dd>Portra 400 and HP5 Plus, one lens, too much rain.</dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
+
+    <hr class="rule--double" />
+
+    <section style="padding-block: clamp(2.4rem, 4vw, 3.4rem)">
+      <div class="section-head">
+        <h2>Latest — Professional</h2>
+        <a href="/writings">All writings →</a>
+      </div>
+      <div class="entry-list">
+        {professional.map((entry) => (
+          <EntryRow
+            href={`/writings/${entry.id}`}
+            date={entry.data.date}
+            title={entry.data.title}
+            excerpt={entry.data.excerpt}
+            badges={[categoryLabel(entry.data.category)]}
+            lang={langLabel(entry.data.lang)}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section style="padding-bottom: clamp(2.4rem, 4vw, 3.4rem)">
+      <div class="section-head">
+        <h2>Latest — Personal</h2>
+        <a href="/writings">All writings →</a>
+      </div>
+      <div class="entry-list">
+        {personal.map((entry) => (
+          <EntryRow
+            href={`/writings/${entry.id}`}
+            date={entry.data.date}
+            title={entry.data.title}
+            excerpt={entry.data.excerpt}
+            badges={[categoryLabel(entry.data.category)]}
+            lang={langLabel(entry.data.lang)}
+          />
+        ))}
+      </div>
+    </section>
+
+    <section style="padding-bottom: clamp(2.4rem, 4vw, 3.4rem)">
+      <div class="section-head">
+        <h2>Music</h2>
+        <a href="/music">Concert notes &amp; recordings →</a>
+      </div>
+      <div class="card-grid">
+        {recentMusic.map((entry) => (
+          <MusicCard
+            href={`/music/${entry.id}`}
+            type={entry.data.type}
+            title={entry.data.title}
+            excerpt={entry.data.excerpt}
+            date={entry.data.date}
+            composers={entry.data.composers}
+            performers={entry.data.performers}
+          />
+        ))}
+      </div>
+    </section>
+
+    {latestRoll && (
+      <section style="padding-bottom: clamp(2.4rem, 4vw, 3.4rem)">
+        <div class="section-head">
+          <h2>Film &amp; Travel</h2>
+          <a href="/film">All rolls →</a>
+        </div>
+        <a
+          href={`/film/${latestRoll.id}`}
+          style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(1.2rem, 3vw, 2.4rem); align-items: center; text-decoration: none"
+          class="roll-teaser"
+        >
+          <div style="overflow: hidden; border: 1px solid var(--rule)">
+            <img
+              src={latestRoll.data.coverPhoto}
+              alt={latestRoll.data.title}
+              style="width: 100%; aspect-ratio: 3/2; object-fit: cover"
+              loading="lazy"
+            />
+          </div>
+          <div>
+            <p class="kicker" style="margin-bottom: 0.5rem">{latestRoll.data.rollNumber} · {latestRoll.data.season}</p>
+            <h3 style="font-size: clamp(1.3rem, 2vw, 1.7rem); margin-bottom: 0.6rem">{latestRoll.data.title}</h3>
+            <p style="color: var(--muted); font-size: 0.95rem">{latestRoll.data.excerpt}</p>
+            <p class="small-meta">
+              {latestRoll.data.camera}
+              <span class="dot"></span>
+              {latestRoll.data.filmStock}
+              <span class="dot"></span>
+              {latestRoll.data.location}
+            </p>
+          </div>
+        </a>
+      </section>
+    )}
+
+    {featured && (
+      <section
+        style="border-top: 3px double var(--rule-strong); padding-block: clamp(1.8rem, 3vw, 2.6rem); margin-bottom: 1rem; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); gap: 2rem"
+        class="featured-strip"
+      >
+        <div>
+          <p class="kicker">Featured</p>
+          <p style="font-family: var(--sans); font-size: 0.85rem; color: var(--muted); margin: 0">
+            Selected from the archive
+          </p>
+        </div>
+        <div>
+          <h3 style="font-size: clamp(1.2rem, 1.8vw, 1.5rem); margin-bottom: 0.4rem">
+            <a href={`/writings/${featured.id}`} style="text-decoration: none">{featured.data.title}</a>
+          </h3>
+          <p style="color: var(--muted); font-size: 0.92rem; margin-bottom: 0.5rem">{featured.data.excerpt}</p>
+          <p class="small-meta">
+            {trackLabel(featured.data.track)}
+            <span class="dot"></span>
+            {categoryLabel(featured.data.category)}
+            <span class="dot"></span>
+            {readingTime(featured.body ?? '')} min read
+          </p>
+        </div>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  @media (max-width: 760px) {
+    .roll-teaser,
+    .featured-strip {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

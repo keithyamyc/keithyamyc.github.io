@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750">
+  <rect width="1000" height="750" fill="#D6D2C9"/>
+  <!-- monochrome tram -->
+  <rect x="0" y="520" width="1000" height="230" fill="#9A968D"/>
+  <g stroke="#6E6A62" stroke-width="3">
+    <line x1="0" y1="600" x2="1000" y2="600"/>
+    <line x1="0" y1="690" x2="1000" y2="690"/>
+  </g>
+  <rect x="430" y="250" width="360" height="290" fill="#B4AFA4"/>
+  <rect x="430" y="250" width="360" height="40" fill="#8B877E"/>
+  <g fill="#3B3934">
+    <rect x="455" y="310" width="80" height="70"/>
+    <rect x="555" y="310" width="80" height="70"/>
+    <rect x="655" y="310" width="80" height="70"/>
+  </g>
+  <circle cx="530" cy="570" r="26" fill="#2E2C29"/>
+  <circle cx="690" cy="570" r="26" fill="#2E2C29"/>
+  <!-- overhead wires -->
+  <g stroke="#4B4944" stroke-width="3">
+    <line x1="0" y1="120" x2="1000" y2="150"/>
+    <line x1="600" y1="250" x2="620" y2="150"/>
+  </g>
+  <!-- lone figure with umbrella at right -->
+  <circle cx="880" cy="470" r="8" fill="#22201D"/>
+  <path d="M870 480 L890 480 L894 540 L866 540 Z" fill="#22201D"/>
+  <path d="M852 462 Q880 436 908 462 Z" fill="#2A2825"/>
+</svg>

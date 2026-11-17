@@ -1,0 +1,147 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import EntryRow from '../../components/EntryRow.astro';
+import {
+  PROFESSIONAL_CATEGORIES,
+  PERSONAL_CATEGORIES,
+} from '../../config/site';
+import { categoryLabel, langLabel } from '../../lib/format';
+
+const writings = (await getCollection('writings')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const professional = writings.filter((w) => w.data.track === 'professional');
+const personal = writings.filter((w) => w.data.track === 'personal');
+---
+
+<Base
+  title="Writings"
+  description="Professional commentaries, legal essays, food reviews, and personal diaries, biographicals and reading notes — in English and Chinese."
+>
+  <div class="shell">
+    <header class="page-head">
+      <p class="kicker">Writings</p>
+      <h1>Two kinds of writing</h1>
+      <p>
+        Professional pieces — commentaries, legal analysis, essays, food reviews — sit
+        alongside the personal: diaries, biographical sketches, reading notes. Same
+        person, different registers.
+      </p>
+    </header>
+
+    <div class="tabs" role="tablist" aria-label="Writing track">
+      <button type="button" role="tab" aria-selected="true" data-tab="professional">
+        Professional <span data-tab-count="professional">{professional.length}</span>
+      </button>
+      <button type="button" role="tab" aria-selected="false" data-tab="personal">
+        Personal <span data-tab-count="personal">{personal.length}</span>
+      </button>
+    </div>
+
+    <div class="filters" data-pill-group="professional">
+      <button class="pill" type="button" data-category="all" aria-pressed="true">All</button>
+      {PROFESSIONAL_CATEGORIES.map((cat) => (
+        <button class="pill" type="button" data-category={cat.id} aria-pressed="false">
+          {cat.label}
+        </button>
+      ))}
+      <span class="filters__count" data-count-text></span>
+    </div>
+
+    <div class="filters" data-pill-group="personal" hidden>
+      <button class="pill" type="button" data-category="all" aria-pressed="true">All</button>
+      {PERSONAL_CATEGORIES.map((cat) => (
+        <button class="pill" type="button" data-category={cat.id} aria-pressed="false">
+          {cat.label}
+        </button>
+      ))}
+      <span class="filters__count" data-count-text></span>
+    </div>
+
+    <div class="entry-list" data-entry-list>
+      {writings.map((entry) => (
+        <div
+          data-entry
+          data-track={entry.data.track}
+          data-category={entry.data.category}
+        >
+          <EntryRow
+            href={`/writings/${entry.id}`}
+            date={entry.data.date}
+            title={entry.data.title}
+            excerpt={entry.data.excerpt}
+            badges={[categoryLabel(entry.data.category)]}
+            lang={langLabel(entry.data.lang)}
+          />
+        </div>
+      ))}
+    </div>
+
+    <p class="empty" data-empty hidden>Nothing in this category yet.</p>
+  </div>
+</Base>
+
+<script>
+  const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-tab]'));
+  const pillGroups = Array.from(document.querySelectorAll<HTMLElement>('[data-pill-group]'));
+  const entries = Array.from(document.querySelectorAll<HTMLElement>('[data-entry]'));
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+
+  let track = 'professional';
+  let category = 'all';
+
+  function apply() {
+    let visible = 0;
+    entries.forEach((el) => {
+      const show =
+        el.dataset.track === track &&
+        (category === 'all' || el.dataset.category === category);
+      el.hidden = !show;
+      if (show) visible += 1;
+    });
+
+    if (empty) empty.hidden = visible !== 0;
+
+    pillGroups.forEach((group) => {
+      group.hidden = group.dataset.pillGroup !== track;
+    });
+
+    document.querySelectorAll<HTMLElement>('[data-count-text]').forEach((el) => {
+      if (!el.closest<HTMLElement>('[hidden]')) {
+        el.textContent = `${visible} ${visible === 1 ? 'entry' : 'entries'}`;
+      }
+    });
+
+    tabs.forEach((tab) =>
+      tab.setAttribute(
+        'aria-selected',
+        String(tab.dataset.tab === track)
+      )
+    );
+
+    document.querySelectorAll<HTMLButtonElement>('[data-category]').forEach((pill) => {
+      if (pill.closest<HTMLElement>(`[data-pill-group="${track}"]`)) {
+        pill.setAttribute('aria-pressed', String(pill.dataset.category === category));
+      }
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      track = tab.dataset.tab ?? 'professional';
+      category = 'all';
+      apply();
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>('[data-category]').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      category = pill.dataset.category ?? 'all';
+      apply();
+    });
+  });
+
+  apply();
+</script>

@@ -1,0 +1,56 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import MusicCard from '../../../components/MusicCard.astro';
+import { slugify } from '../../../lib/format';
+
+export async function getStaticPaths() {
+  const music = await getCollection('music');
+  const names = new Set<string>();
+  for (const entry of music) {
+    for (const composer of entry.data.composers) names.add(composer);
+  }
+
+  return Array.from(names).map((name) => ({
+    params: { name: slugify(name) },
+    props: { name },
+  }));
+}
+
+const { name } = Astro.props;
+const music = (await getCollection('music'))
+  .filter((entry) => entry.data.composers.includes(name))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<Base title={`${name} — Music`} description={`Concert notes, recording reviews and writings on ${name}.`}>
+  <div class="shell">
+    <header class="page-head">
+      <p class="kicker">Composer index</p>
+      <h1 style="font-style: italic">{name}</h1>
+      <p>
+        {music.length} {music.length === 1 ? 'entry' : 'entries'} across concert notes,
+        recordings, and essays.
+      </p>
+    </header>
+
+    <div class="card-grid">
+      {music.map((entry) => (
+        <MusicCard
+          href={`/music/${entry.id}`}
+          type={entry.data.type}
+          title={entry.data.title}
+          excerpt={entry.data.excerpt}
+          date={entry.data.date}
+          composers={entry.data.composers}
+          performers={entry.data.performers}
+        />
+      ))}
+    </div>
+
+    <div class="post-foot" style="margin-top: 2.4rem">
+      <a href="/music">← Music index</a>
+      <a href="/music#index">All composers</a>
+    </div>
+  </div>
+</Base>

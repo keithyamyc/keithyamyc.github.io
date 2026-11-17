@@ -1,0 +1,128 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import MusicCard from '../../components/MusicCard.astro';
+import { MUSIC_TYPES } from '../../config/site';
+import { slugify } from '../../lib/format';
+
+const music = (await getCollection('music')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const composerCounts = new Map<string, number>();
+const performerCounts = new Map<string, number>();
+
+for (const entry of music) {
+  for (const composer of entry.data.composers) {
+    composerCounts.set(composer, (composerCounts.get(composer) ?? 0) + 1);
+  }
+  for (const performer of entry.data.performers) {
+    performerCounts.set(performer, (performerCounts.get(performer) ?? 0) + 1);
+  }
+}
+
+const composers = Array.from(composerCounts.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+const performers = Array.from(performerCounts.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+---
+
+<Base
+  title="Music"
+  description="Concert notes, recording reviews, and writings on classical music — indexed by composer and performer."
+>
+  <div class="shell">
+    <header class="page-head">
+      <p class="kicker">Music</p>
+      <h1>Concert notes, records, and other listening</h1>
+      <p>
+        I go to concerts as often as I can and write about most of them. Here are the
+        notes from the hall, the reviews of recordings I keep returning to, and the
+        occasional essay about why any of it matters.
+      </p>
+    </header>
+
+    <section id="index" style="margin-bottom: 2.6rem; scroll-margin-top: 6rem">
+      <div class="section-head">
+        <h2>Index by composer</h2>
+        <span class="small-meta" style="text-transform: none; letter-spacing: 0.04em">
+          {composers.length} composers
+        </span>
+      </div>
+      <div class="chips">
+        {composers.map(([name, count]) => (
+          <a class="chip" href={`/music/composer/${slugify(name)}`}>
+            {name} <span style="color: var(--muted); font-family: var(--mono); font-size: 0.7em">{count}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section style="margin-bottom: 2.6rem">
+      <div class="section-head">
+        <h2>Index by performer</h2>
+        <span class="small-meta" style="text-transform: none; letter-spacing: 0.04em">
+          {performers.length} artists &amp; ensembles
+        </span>
+      </div>
+      <div class="chips">
+        {performers.map(([name, count]) => (
+          <a class="chip" href={`/music/performer/${slugify(name)}`}>
+            {name} <span style="color: var(--muted); font-family: var(--mono); font-size: 0.7em">{count}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <div class="filters">
+      <button class="pill" type="button" data-type="all" aria-pressed="true">All</button>
+      {MUSIC_TYPES.map((type) => (
+        <button class="pill" type="button" data-type={type.id} aria-pressed="false">
+          {type.label}
+        </button>
+      ))}
+      <span class="filters__count" data-count-text></span>
+    </div>
+
+    <div class="card-grid" data-music-list>
+      {music.map((entry) => (
+        <div data-music data-type={entry.data.type}>
+          <MusicCard
+            href={`/music/${entry.id}`}
+            type={entry.data.type}
+            title={entry.data.title}
+            excerpt={entry.data.excerpt}
+            date={entry.data.date}
+            composers={entry.data.composers}
+            performers={entry.data.performers}
+          />
+        </div>
+      ))}
+    </div>
+
+    <p class="empty" data-empty hidden>Nothing in this category yet.</p>
+  </div>
+</Base>
+
+<script>
+  const pills = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-type]'));
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-music]'));
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+  const count = document.querySelector<HTMLElement>('[data-count-text]');
+
+  function apply(type: string) {
+    let visible = 0;
+    items.forEach((item) => {
+      const show = type === 'all' || item.dataset.type === type;
+      item.hidden = !show;
+      if (show) visible += 1;
+    });
+    if (empty) empty.hidden = visible !== 0;
+    if (count) count.textContent = `${visible} ${visible === 1 ? 'entry' : 'entries'}`;
+    pills.forEach((pill) => pill.setAttribute('aria-pressed', String(pill.dataset.type === type)));
+  }
+
+  pills.forEach((pill) =>
+    pill.addEventListener('click', () => apply(pill.dataset.type ?? 'all'))
+  );
+
+  apply('all');
+</script>

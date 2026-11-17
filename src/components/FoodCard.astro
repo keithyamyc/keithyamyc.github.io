@@ -1,0 +1,41 @@
+---
+interface Food {
+  restaurant: string;
+  location: string;
+  cuisine: string;
+  dateVisited?: string;
+  verdict?: string;
+}
+
+interface Props {
+  food: Food;
+}
+const { food } = Astro.props;
+---
+
+<div class="meta-card">
+  <div class="meta-card__head">
+    <span>Food Review — Restaurant File</span>
+    <span>{food.dateVisited ?? 'Undated visit'}</span>
+  </div>
+  <dl>
+    <div>
+      <dt>Restaurant</dt>
+      <dd>{food.restaurant}</dd>
+    </div>
+    <div>
+      <dt>Location</dt>
+      <dd>{food.location}</dd>
+    </div>
+    <div>
+      <dt>Cuisine</dt>
+      <dd>{food.cuisine}</dd>
+    </div>
+    {food.verdict && (
+      <div>
+        <dt>Verdict</dt>
+        <dd>{food.verdict}</dd>
+      </div>
+    )}
+  </dl>
+</div>

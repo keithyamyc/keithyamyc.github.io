@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 750" width="1000" height="750">
+  <rect width="1000" height="750" fill="#3A3129"/>
+  <!-- tiled wall -->
+  <g stroke="#4A4038" stroke-width="3">
+    <line x1="0" y1="120" x2="1000" y2="120"/>
+    <line x1="0" y1="240" x2="1000" y2="240"/>
+    <line x1="0" y1="360" x2="1000" y2="360"/>
+    <line x1="0" y1="480" x2="1000" y2="480"/>
+    <line x1="160" y1="0" x2="160" y2="600"/>
+    <line x1="340" y1="0" x2="340" y2="600"/>
+    <line x1="520" y1="0" x2="520" y2="600"/>
+    <line x1="700" y1="0" x2="700" y2="600"/>
+    <line x1="880" y1="0" x2="880" y2="600"/>
+  </g>
+  <!-- stainless counter -->
+  <rect x="0" y="560" width="1000" height="190" fill="#8E8A83"/>
+  <rect x="0" y="560" width="1000" height="14" fill="#B8B4AC"/>
+  <!-- big stock pot with steam -->
+  <ellipse cx="380" cy="470" rx="190" ry="52" fill="#5C5952"/>
+  <path d="M190 470 L190 330 Q380 280 570 330 L570 470 Z" fill="#6E6B64"/>
+  <ellipse cx="380" cy="330" rx="190" ry="52" fill="#7E7B74"/>
+  <ellipse cx="380" cy="330" rx="160" ry="40" fill="#C9B98F"/>
+  <g stroke="#EFE9DC" stroke-width="6" fill="none" opacity="0.3" stroke-linecap="round">
+    <path d="M320 280 Q340 230 320 180"/>
+    <path d="M400 270 Q420 218 400 166"/>
+    <path d="M470 284 Q490 236 468 188"/>
+  </g>
+  <!-- hanging ladles -->
+  <g stroke="#4A4741" stroke-width="4">
+    <line x1="700" y1="60" x2="700" y2="200"/>
+    <line x1="800" y1="60" x2="800" y2="180"/>
+    <line x1="890" y1="60" x2="890" y2="210"/>
+  </g>
+  <g fill="#5C5952">
+    <ellipse cx="700" cy="212" rx="22" ry="16"/>
+    <ellipse cx="800" cy="192" rx="20" ry="15"/>
+    <ellipse cx="890" cy="222" rx="24" ry="17"/>
+  </g>
+  <!-- bowls stacked -->
+  <g fill="#E7E1D4">
+    <ellipse cx="820" cy="540" rx="60" ry="16"/>
+    <ellipse cx="820" cy="524" rx="60" ry="16"/>
+    <ellipse cx="820" cy="508" rx="60" ry="16"/>
+  </g>
+</svg>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#D7C8B6"/>
+      <stop offset="55%" stop-color="#E8D8C3"/>
+      <stop offset="100%" stop-color="#C9A682"/>
+    </linearGradient>
+    <linearGradient id="water1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#8A6D53"/>
+      <stop offset="100%" stop-color="#3E352E"/>
+    </linearGradient>
+    <filter id="grain1">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" stitchTiles="stitch" result="noise"/>
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.09 0" in="noise" result="coloredNoise"/>
+      <feComposite operator="in" in2="SourceGraphic"/>
+      <feBlend mode="multiply" in="SourceGraphic" in2="coloredNoise"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#sky1)"/>
+  <!-- Distant Arashiyama hills -->
+  <path d="M0 440 Q240 310 520 400 T1200 350 L1200 500 L0 500 Z" fill="#6F655B" opacity="0.65"/>
+  <path d="M0 470 Q380 370 760 445 T1200 410 L1200 520 L0 520 Z" fill="#4B443D" opacity="0.85"/>
+  <!-- Katsura River -->
+  <rect y="500" width="1200" height="300" fill="url(#water1)"/>
+  <!-- Togetsukyo Wooden Bridge Silhouette -->
+  <rect x="80" y="488" width="1040" height="10" fill="#2A2420"/>
+  <rect x="80" y="480" width="1040" height="3" fill="#3C322B"/>
+  <g fill="#2A2420">
+    <rect x="160" y="495" width="8" height="45"/>
+    <rect x="290" y="495" width="8" height="45"/>
+    <rect x="420" y="495" width="8" height="45"/>
+    <rect x="550" y="495" width="8" height="45"/>
+    <rect x="680" y="495" width="8" height="45"/>
+    <rect x="810" y="495" width="8" height="45"/>
+    <rect x="940" y="495" width="8" height="45"/>
+    <rect x="1060" y="495" width="8" height="45"/>
+  </g>
+  <!-- Autumn Maple Branch Foreground -->
+  <g fill="#8B3226" opacity="0.88">
+    <circle cx="980" cy="140" r="65"/>
+    <circle cx="1050" cy="110" r="85"/>
+    <circle cx="1120" cy="170" r="70"/>
+    <circle cx="920" cy="95" r="50"/>
+  </g>
+  <!-- Subtle sun reflection -->
+  <ellipse cx="420" cy="580" rx="180" ry="6" fill="#E8D8C3" opacity="0.35"/>
+  <ellipse cx="420" cy="610" rx="120" ry="4" fill="#E8D8C3" opacity="0.25"/>
+  <rect width="1200" height="800" filter="url(#grain1)" opacity="0.5"/>
+</svg>

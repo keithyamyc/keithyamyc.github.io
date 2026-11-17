@@ -1,0 +1,60 @@
+---
+interface Concert {
+  concertDate: string;
+  venue: string;
+  city?: string;
+  orchestra?: string;
+  conductor?: string;
+  soloists: string[];
+  repertoire: { composer: string; work: string }[];
+}
+
+interface Props {
+  concert: Concert;
+}
+const { concert } = Astro.props;
+---
+
+<section class="programme" aria-label="Concert programme">
+  <p class="programme__label">Concert Programme</p>
+
+  {concert.repertoire.length > 0 && (
+    <ul class="programme__works">
+      {concert.repertoire.map((item) => (
+        <li>
+          <span class="composer">{item.composer}</span>
+          <span class="work">{item.work}</span>
+        </li>
+      ))}
+    </ul>
+  )}
+
+  <dl class="programme__credits">
+    <div>
+      <dt>Date</dt>
+      <dd>{concert.concertDate}</dd>
+    </div>
+    <div>
+      <dt>Venue</dt>
+      <dd>{concert.venue}{concert.city ? `, ${concert.city}` : ''}</dd>
+    </div>
+    {concert.orchestra && (
+      <div>
+        <dt>Orchestra</dt>
+        <dd>{concert.orchestra}</dd>
+      </div>
+    )}
+    {concert.conductor && (
+      <div>
+        <dt>Conductor</dt>
+        <dd>{concert.conductor}</dd>
+      </div>
+    )}
+    {concert.soloists.length > 0 && (
+      <div>
+        <dt>Soloists</dt>
+        <dd>{concert.soloists.join(' · ')}</dd>
+      </div>
+    )}
+  </dl>
+</section>
