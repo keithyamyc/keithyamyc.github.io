@@ -98,6 +98,27 @@ const ogImage = new URL(image, SITE.url).href;
     <Footer />
     <Search />
 
+    <div
+      class="lightbox"
+      data-lightbox
+      data-open="false"
+      aria-hidden="true"
+      role="dialog"
+      aria-label="Image viewer"
+    >
+      <div class="lightbox__stage">
+        <img data-lightbox-image src="" alt="" />
+      </div>
+      <div class="lightbox__bar">
+        <p data-lightbox-caption></p>
+        <div class="lightbox__controls">
+          <button type="button" data-lightbox-prev aria-label="Previous image">←</button>
+          <button type="button" data-lightbox-next aria-label="Next image">→</button>
+          <button type="button" data-lightbox-close aria-label="Close viewer">✕</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       const toggle = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
       const root = document.documentElement;
@@ -120,6 +141,104 @@ const ogImage = new URL(image, SITE.url).href;
           localStorage.setItem('theme', next);
         } catch (e) {}
         syncIcon();
+      });
+    </script>
+
+    <script>
+      type Item = { src: string; caption: string; title: string };
+
+      const box = document.querySelector<HTMLElement>('[data-lightbox]');
+      const viewer = document.querySelector<HTMLImageElement>('[data-lightbox-image]');
+      const capEl = document.querySelector<HTMLElement>('[data-lightbox-caption]');
+
+      let items: Item[] = [];
+      let index = 0;
+
+      function fromTrigger(trigger: HTMLElement): Item[] {
+        const group = trigger.closest<HTMLElement>('[data-gallery]');
+        const nodes = group
+          ? Array.from(group.querySelectorAll<HTMLElement>('[data-lightbox-index]'))
+          : [];
+        return nodes.map((node) => ({
+          src: node.dataset.full ?? '',
+          caption: node.dataset.caption ?? '',
+          title: node.dataset.title ?? '',
+        }));
+      }
+
+      function fromProse(origin: HTMLElement): Item[] {
+        const prose = origin.closest<HTMLElement>('.prose');
+        if (!prose) return [];
+        return Array.from(prose.querySelectorAll<HTMLImageElement>('figure img')).map((image) => ({
+          src: image.currentSrc || image.src,
+          caption:
+            image.closest('figure')?.querySelector('figcaption')?.textContent?.trim() ??
+            image.alt,
+          title: '',
+        }));
+      }
+
+      function open(i: number) {
+        if (!box || !viewer || !capEl || items.length === 0) return;
+        index = (i + items.length) % items.length;
+        const item = items[index];
+        viewer.src = item.src;
+        viewer.alt = item.caption;
+        capEl.textContent = [item.title, item.caption].filter(Boolean).join(' — ');
+        box.dataset.open = 'true';
+        box.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function hide() {
+        if (!box) return;
+        box.dataset.open = 'false';
+        box.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+
+      document.addEventListener('click', (event) => {
+        const target = event.target as HTMLElement;
+
+        const trigger = target.closest<HTMLElement>('[data-lightbox-index]');
+        if (trigger) {
+          items = fromTrigger(trigger);
+          const group = trigger.closest<HTMLElement>('[data-gallery]');
+          const nodes = group
+            ? Array.from(group.querySelectorAll<HTMLElement>('[data-lightbox-index]'))
+            : [];
+          open(Math.max(0, nodes.indexOf(trigger)));
+          return;
+        }
+
+        const figureImage = target.closest<HTMLElement>('.prose figure img');
+        if (figureImage) {
+          items = fromProse(figureImage);
+          const image = figureImage as HTMLImageElement;
+          const at = items.findIndex((item) => item.src === (image.currentSrc || image.src));
+          open(at < 0 ? 0 : at);
+        }
+      });
+
+      document.querySelector('[data-lightbox-prev]')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        open(index - 1);
+      });
+      document.querySelector('[data-lightbox-next]')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        open(index + 1);
+      });
+      document.querySelector('[data-lightbox-close]')?.addEventListener('click', hide);
+
+      box?.addEventListener('click', (event) => {
+        if (event.target === box) hide();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (box?.dataset.open !== 'true') return;
+        if (event.key === 'Escape') hide();
+        if (event.key === 'ArrowLeft') open(index - 1);
+        if (event.key === 'ArrowRight') open(index + 1);
       });
     </script>
   </body>

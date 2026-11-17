@@ -5,7 +5,6 @@ import Toc from '../../components/Toc.astro';
 import Comments from '../../components/Comments.astro';
 import FoodCard from '../../components/FoodCard.astro';
 import BookCard from '../../components/BookCard.astro';
-import Gallery from '../../components/Gallery.astro';
 import {
   categoryLabel,
   categoryLabelZh,
@@ -56,7 +55,15 @@ const older = index >= 0 && index < all.length - 1 ? all[index + 1] : null;
           <p class="lede" lang={zh ? 'zh' : undefined}>{entry.data.subtitle}</p>
         )}
         <p class="small-meta">
-          <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time>
+          {entry.data.updated ? (
+            <>
+              <span>Published <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time></span>
+              <span class="dot"></span>
+              <span>Updated <time datetime={entry.data.updated.toISOString()}>{formatDateLong(entry.data.updated)}</time></span>
+            </>
+          ) : (
+            <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time>
+          )}
           <span class="dot"></span>
           {minutes} min read
           <span class="dot"></span>
@@ -79,15 +86,6 @@ const older = index >= 0 && index < all.length - 1 ? all[index + 1] : null;
           <div class:list={['prose', { dropcap: !zh }]} lang={zh ? 'zh' : undefined}>
             <Content />
           </div>
-
-          {entry.data.food && entry.data.food.photos.length > 0 && (
-            <section style="margin-top: 2.5rem">
-              <div class="section-head" style="margin-bottom: 1rem">
-                <h2 style="font-size: 1rem">Photographs</h2>
-              </div>
-              <Gallery photos={entry.data.food.photos} id="food" />
-            </section>
-          )}
 
           {entry.data.tags.length > 0 && (
             <div class="tag-row">

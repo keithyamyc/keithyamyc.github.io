@@ -1101,6 +1101,104 @@ p {
   padding-left: 0.1rem;
 }
 
+/* Photographs set inside the text */
+.prose figure img {
+  cursor: zoom-in;
+}
+
+.prose figure.fig-side {
+  float: right;
+  width: 42%;
+  max-width: 22rem;
+  margin: 0.35em 0 1.4em 2rem;
+  shape-outside: margin-box;
+}
+
+.prose figure.fig-side-left {
+  float: left;
+  width: 42%;
+  max-width: 22rem;
+  margin: 0.35em 2rem 1.4em 0;
+}
+
+@media (max-width: 760px) {
+  .prose figure.fig-side,
+  .prose figure.fig-side-left {
+    float: none;
+    width: 100%;
+    max-width: none;
+    margin: 1.8em 0;
+  }
+}
+
+/* Text alongside a column of photographs */
+.split-photos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.52fr);
+  gap: clamp(1.6rem, 4vw, 3.4rem);
+  align-items: start;
+}
+
+.split-photos__aside {
+  position: sticky;
+  top: 5.5rem;
+  display: grid;
+  gap: 1.6rem;
+}
+
+.photo-rail {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.rail-item {
+  margin: 0;
+}
+
+.rail-item button {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  cursor: zoom-in;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.rail-item button:hover img {
+  transform: scale(1.02);
+}
+
+.rail-item img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.7s var(--ease);
+}
+
+.rail-item figcaption {
+  font-family: var(--sans);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .split-photos {
+    grid-template-columns: 1fr;
+  }
+  .split-photos__aside {
+    position: static;
+    margin-top: 2rem;
+  }
+  .photo-rail {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+  }
+}
+
 .prose hr {
   border: 0;
   border-top: 1px solid var(--rule);

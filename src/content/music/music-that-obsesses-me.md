@@ -2,6 +2,7 @@
 title: '令我着迷的音乐'
 subtitle: '写于 2026 年 5 月至 7 月'
 date: 2026-05-28
+updated: 2026-07-02
 type: writing
 lang: zh-Hans
 excerpt: '总有些音乐令我尤其着迷——不是一般的着迷，而是疯了一般着迷，每天都要听几遍，持续一段时间。'

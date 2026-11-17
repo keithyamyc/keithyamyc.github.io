@@ -38,63 +38,65 @@ const older = index >= 0 && index < all.length - 1 ? all[index + 1] : null;
         <h1>{entry.data.title}</h1>
         <p class="lede">{entry.data.excerpt}</p>
         <p class="small-meta">
-          <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time>
+          {entry.data.updated ? (
+            <>
+              <span>Published <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time></span>
+              <span class="dot"></span>
+              <span>Updated <time datetime={entry.data.updated.toISOString()}>{formatDateLong(entry.data.updated)}</time></span>
+            </>
+          ) : (
+            <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time>
+          )}
           <span class="dot"></span>
           {entry.data.photos.length} frames
           {entry.data.sample && <><span class="dot"></span><span class="badge badge--accent">Sample</span></>}
         </p>
       </header>
 
-      <div class="roll-head">
-        <div class="prose" style="margin: 0">
+      <div class="split-photos">
+        <div class="prose" style="max-width: none">
           <Content />
         </div>
 
-        <aside class="roll-spec">
-          <div class="meta-card__head">
-            <span>Roll Record</span>
-            <span>{entry.data.rollNumber}</span>
-          </div>
-          <dl>
-            <div>
-              <dt>Camera</dt>
-              <dd>{entry.data.camera}</dd>
+        <aside class="split-photos__aside">
+          <div class="roll-spec">
+            <div class="meta-card__head">
+              <span>Roll Record</span>
+              <span>{entry.data.rollNumber}</span>
             </div>
-            {entry.data.lens && (
+            <dl>
               <div>
-                <dt>Lens</dt>
-                <dd>{entry.data.lens}</dd>
+                <dt>Camera</dt>
+                <dd>{entry.data.camera}</dd>
               </div>
-            )}
-            <div>
-              <dt>Film</dt>
-              <dd>{entry.data.filmStock}</dd>
-            </div>
-            <div>
-              <dt>Location</dt>
-              <dd>{entry.data.location}</dd>
-            </div>
-            <div>
-              <dt>Season</dt>
-              <dd>{entry.data.season}</dd>
-            </div>
-            <div>
-              <dt>Developed</dt>
-              <dd>{formatDateLong(entry.data.date)}</dd>
-            </div>
-          </dl>
+              {entry.data.lens && (
+                <div>
+                  <dt>Lens</dt>
+                  <dd>{entry.data.lens}</dd>
+                </div>
+              )}
+              <div>
+                <dt>Film</dt>
+                <dd>{entry.data.filmStock}</dd>
+              </div>
+              <div>
+                <dt>Location</dt>
+                <dd>{entry.data.location}</dd>
+              </div>
+              <div>
+                <dt>Season</dt>
+                <dd>{entry.data.season}</dd>
+              </div>
+              <div>
+                <dt>Developed</dt>
+                <dd>{formatDateLong(entry.data.date)}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <Gallery photos={entry.data.photos} id={entry.id} layout="rail" />
         </aside>
       </div>
-
-      <section style="margin-top: 2.4rem">
-        <div class="section-head">
-          <h2>The frames</h2>
-          <span class="small-meta" style="text-transform: none; letter-spacing: 0.04em">
-            Click to enlarge
-          </span>
-        </div>
-        <Gallery photos={entry.data.photos} id={entry.id} />
-      </section>
 
       <div class="post-foot">
         <a href="/film">← All rolls</a>

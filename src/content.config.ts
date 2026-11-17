@@ -7,6 +7,7 @@ const writings = defineCollection({
     title: z.string(),
     subtitle: z.string().optional(),
     date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
     track: z.enum(['professional', 'personal']),
     category: z.enum([
       'commentaries',
@@ -33,15 +34,6 @@ const writings = defineCollection({
         cuisine: z.string(),
         dateVisited: z.string().optional(),
         verdict: z.string().optional(),
-        photos: z
-          .array(
-            z.object({
-              src: z.string(),
-              caption: z.string(),
-              dish: z.string().optional(),
-            })
-          )
-          .default([]),
       })
       .optional(),
     // Optional metadata for Readings (Personal)
@@ -63,6 +55,7 @@ const music = defineCollection({
     title: z.string(),
     subtitle: z.string().optional(),
     date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
     type: z.enum(['concert', 'recording', 'writing']),
     lang: z.enum(['en', 'zh-Hant', 'zh-Hans', 'bilingual']).default('en'),
     excerpt: z.string(),
@@ -113,6 +106,7 @@ const film = defineCollection({
     rollNumber: z.string(),
     location: z.string(),
     date: z.coerce.date(),
+    updated: z.coerce.date().optional(),
     season: z.string(),
     camera: z.string(),
     lens: z.string().optional(),

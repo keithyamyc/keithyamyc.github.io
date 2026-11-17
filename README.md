@@ -84,7 +84,8 @@ Create a file in the right folder. The filename becomes the URL
 ---
 title: 'Title'
 subtitle: 'Optional standfirst'
-date: 2026-11-20
+date: 2026-11-20          # date written / published
+updated: 2026-12-02       # optional: last edit, shown as "Updated ..."
 track: professional          # professional | personal
 category: commentaries       # professional: commentaries | essays | food-reviews | legal | others
 lang: en                     # en | zh-Hant | zh-Hans | bilingual
@@ -108,11 +109,9 @@ food:
   cuisine: 'Cantonese — wonton noodles'
   dateVisited: 'September 2026'
   verdict: 'Worth waking up for.'
-  photos:
-    - src: '/images/food/wonton-01.svg'
-      caption: 'The bowl arrives at 6:12 a.m.'
-      dish: 'Wonton noodles'
 ```
+
+Dish photographs go in the body, like any other image (see below).
 
 **Readings** may add:
 
@@ -166,6 +165,29 @@ Names in `composers` and `performers` automatically create index pages at
 `/music/composer/<slug>/` and `/music/performer/<slug>/`. Use the same spelling
 every time (`Gustav Mahler`, not `Mahler`) so entries group correctly.
 
+### Photographs in the text
+
+An image on its own line becomes a figure with a caption, and opens in the
+lightbox:
+
+```md
+![Caption text](/images/film/kyoto-03.jpg)
+```
+
+Add `"side"` (right) or `"side-left"` as the image title to set the photograph
+beside the text, with the prose wrapping around it:
+
+```md
+![The bamboo grove at nine in the morning](/images/film/bamboo.jpg "side")
+```
+
+The visible caption is the alt text, unless you give a title — then the title is
+shown and the alt stays as the description for screen readers:
+
+```md
+![Bamboo grove, Arashiyama](/images/film/bamboo.jpg "Arashiyama, 9 a.m., after the rain")
+```
+
 ### Film roll
 
 ```yaml
@@ -188,6 +210,9 @@ photos:
     aspect: landscape        # landscape | portrait | square
 ---
 ```
+
+A roll's `photos` render as a column beside the article rather than a gallery at
+the end, so the prose stays readable and the frames run alongside it.
 
 ### Images
 

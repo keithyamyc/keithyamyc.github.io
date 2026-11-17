@@ -15,13 +15,6 @@ food:
   cuisine: 'Cantonese — wonton noodles, braised beef'
   dateVisited: 'September 2026'
   verdict: 'Worth waking up for. Order the wonton, skip the beef.'
-  photos:
-    - src: '/images/food/wonton-01.svg'
-      caption: 'The bowl arrives at 6:12 a.m. — bamboo-pressed noodles, six wontons, a teaspoon of lard at the bottom.'
-      dish: 'Wonton noodles'
-    - src: '/images/food/wonton-02.svg'
-      caption: 'The counter, rebuilt in 1998, unchanged since. The pot has not been off the heat in living memory.'
-      dish: 'The kitchen'
 ---
 
 There are two kinds of Hong Kong breakfast. The first is the one in the guidebooks: dim sum, white tablecloths, a trolley, a photograph of the founder on the wall. The second is the one that begins at five in the morning, standing up, for thirty-eight dollars.
@@ -29,6 +22,8 @@ There are two kinds of Hong Kong breakfast. The first is the one in the guideboo
 I have been eating at Wah Kee for eleven years. In that time the price has risen by nine dollars, the menu has not changed, and the woman who takes the orders has not once asked me what I want.
 
 ## The bowl
+
+![The bowl arrives at 6:12 a.m. — bamboo-pressed noodles, six wontons, a teaspoon of lard at the bottom.](/images/food/wonton-01.svg "side")
 
 Cantonese wonton noodles are an exercise in restraint. There are four components and no more: the broth, the noodle, the wonton, and the lard.
 
@@ -45,6 +40,8 @@ And underneath it all, a teaspoon of rendered lard. Without it the bowl is merel
 - **Hot tea, no sugar** — the pot is refilled without being asked.
 
 What not to order: the braised beef. It is fine. It is not the reason to come.
+
+![The counter, rebuilt in 1998, unchanged since. The pot has not been off the heat in living memory.](/images/food/wonton-02.svg)
 
 ## The arithmetic
 
