@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Mahler’s Ninth, and the Sound of a Hall Holding Its Breath'
 subtitle: 'Hong Kong Philharmonic / Jaap van Zweden — Cultural Centre, 12 October 2026'
 date: 2026-10-13

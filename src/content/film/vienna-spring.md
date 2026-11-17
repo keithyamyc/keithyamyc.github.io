@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Vienna, in Black and White'
 rollNumber: 'Roll 03'
 location: 'Vienna, Austria'

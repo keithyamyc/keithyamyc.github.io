@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'On Keeping a Notebook Badly'
 subtitle: 'In defence of the unfinished entry'
 date: 2026-11-02

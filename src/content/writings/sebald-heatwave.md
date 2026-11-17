@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Reading Sebald in a Heatwave'
 subtitle: 'On walking, melancholy, and the wrong season for a book'
 date: 2026-08-27

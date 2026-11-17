@@ -36,6 +36,7 @@ const frames = rolls.reduce((sum, roll) => sum + roll.data.photos.length, 0);
         <Card
           href={`/film/${roll.id}`}
           image={roll.data.coverPhoto}
+          sample={roll.data.sample}
           imageAlt={roll.data.title}
           kicker={`${roll.data.rollNumber} · ${roll.data.season}`}
           title={roll.data.title}

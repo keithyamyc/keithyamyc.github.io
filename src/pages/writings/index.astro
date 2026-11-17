@@ -72,7 +72,7 @@ const personal = writings.filter((w) => w.data.track === 'personal');
             date={entry.data.date}
             title={entry.data.title}
             excerpt={entry.data.excerpt}
-            badges={[categoryLabel(entry.data.category)]}
+            badges={[categoryLabel(entry.data.category), ...(entry.data.sample ? ['Sample'] : [])]}
             lang={langLabel(entry.data.lang)}
           />
         </div>

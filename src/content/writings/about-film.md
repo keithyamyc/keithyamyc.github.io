@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Things I Tell People Who Ask About Film'
 subtitle: 'A short, unsentimental guide'
 date: 2026-02-11

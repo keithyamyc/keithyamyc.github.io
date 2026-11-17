@@ -1,4 +1,5 @@
 ---
+sample: true
 title: '北京的冬天，第一次'
 subtitle: '日記三則'
 date: 2025-12-20

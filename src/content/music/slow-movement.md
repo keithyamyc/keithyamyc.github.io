@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'In Praise of the Unfashionable Slow Movement'
 subtitle: 'Why the andante is where interpretation is actually decided'
 date: 2026-09-06

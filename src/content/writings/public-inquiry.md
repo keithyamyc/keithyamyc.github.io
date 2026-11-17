@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'The Quiet Erosion of the Public Inquiry'
 subtitle: 'What we lose when accountability becomes a press release'
 date: 2026-10-14

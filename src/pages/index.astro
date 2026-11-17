@@ -77,7 +77,7 @@ const featured = writings.find((w) => w.data.featured);
             date={entry.data.date}
             title={entry.data.title}
             excerpt={entry.data.excerpt}
-            badges={[categoryLabel(entry.data.category)]}
+            badges={[categoryLabel(entry.data.category), ...(entry.data.sample ? ['Sample'] : [])]}
             lang={langLabel(entry.data.lang)}
           />
         ))}
@@ -96,7 +96,7 @@ const featured = writings.find((w) => w.data.featured);
             date={entry.data.date}
             title={entry.data.title}
             excerpt={entry.data.excerpt}
-            badges={[categoryLabel(entry.data.category)]}
+            badges={[categoryLabel(entry.data.category), ...(entry.data.sample ? ['Sample'] : [])]}
             lang={langLabel(entry.data.lang)}
           />
         ))}
@@ -113,6 +113,7 @@ const featured = writings.find((w) => w.data.featured);
           <MusicCard
             href={`/music/${entry.id}`}
             type={entry.data.type}
+            sample={entry.data.sample}
             title={entry.data.title}
             excerpt={entry.data.excerpt}
             date={entry.data.date}

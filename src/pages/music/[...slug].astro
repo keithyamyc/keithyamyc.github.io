@@ -47,6 +47,7 @@ const older = index >= 0 && index < all.length - 1 ? all[index + 1] : null;
           <time datetime={entry.data.date.toISOString()}>{formatDateLong(entry.data.date)}</time>
           <span class="dot"></span>
           <span class="badge">{langLabel(entry.data.lang)}</span>
+          {entry.data.sample && <span class="badge badge--accent">Sample</span>}
         </p>
       </header>
 

@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Kleiber’s Fifth: Still the Reference'
 subtitle: 'Beethoven: Symphonies Nos. 5 & 7 — Vienna Philharmonic, Carlos Kleiber (DG)'
 date: 2026-01-30

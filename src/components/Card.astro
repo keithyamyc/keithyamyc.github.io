@@ -8,9 +8,10 @@ interface Props {
   excerpt?: string;
   footLeft?: string;
   footRight?: string;
+  sample?: boolean;
 }
 
-const { href, image, imageAlt = '', kicker, title, excerpt, footLeft, footRight } = Astro.props;
+const { href, image, imageAlt = '', kicker, title, excerpt, footLeft, footRight, sample = false } = Astro.props;
 ---
 
 <a class="card" href={href}>
@@ -20,6 +21,7 @@ const { href, image, imageAlt = '', kicker, title, excerpt, footLeft, footRight 
     </div>
   )}
   <div class="card__body">
+    {sample && <span class="badge" style="align-self: flex-start">Sample</span>}
     {kicker && <span class="kicker" style="margin-bottom: 0">{kicker}</span>}
     <h3>{title}</h3>
     {excerpt && <p>{excerpt}</p>}

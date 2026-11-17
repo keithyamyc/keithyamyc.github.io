@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'A Bowl of Wonton Noodles at Six in the Morning'
 subtitle: 'Thirty years at the same corner, and the arithmetic of a good breakfast'
 date: 2026-09-21

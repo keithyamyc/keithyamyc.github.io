@@ -24,6 +24,7 @@ const writings = defineCollection({
     featured: z.boolean().default(false),
     toc: z.boolean().default(false),
     comments: z.boolean().default(true),
+    sample: z.boolean().default(false),
     // Optional metadata for Food Reviews (Professional)
     food: z
       .object({
@@ -70,6 +71,7 @@ const music = defineCollection({
     featured: z.boolean().default(false),
     toc: z.boolean().default(false),
     comments: z.boolean().default(true),
+    sample: z.boolean().default(false),
     // Optional Concert Programme Metadata
     concert: z
       .object({
@@ -118,6 +120,7 @@ const film = defineCollection({
     excerpt: z.string(),
     coverPhoto: z.string(),
     comments: z.boolean().default(true),
+    sample: z.boolean().default(false),
     photos: z.array(
       z.object({
         src: z.string(),

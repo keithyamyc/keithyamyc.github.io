@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Three Days in Taipei, Unedited'
 subtitle: 'A diary kept on the back of receipts'
 date: 2026-04-09

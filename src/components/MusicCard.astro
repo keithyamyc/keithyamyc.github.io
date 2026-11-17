@@ -9,9 +9,10 @@ interface Props {
   date: Date;
   composers: string[];
   performers: string[];
+  sample?: boolean;
 }
 
-const { href, type, title, excerpt, date, composers, performers } = Astro.props;
+const { href, type, title, excerpt, date, composers, performers, sample = false } = Astro.props;
 const head = composers[0] ?? performers[0] ?? 'Music';
 ---
 
@@ -22,6 +23,7 @@ const head = composers[0] ?? performers[0] ?? 'Music';
     <span class="music-plate__rule"></span>
   </div>
   <div class="card__body">
+    {sample && <span class="badge" style="align-self: flex-start">Sample</span>}
     <h3>{title}</h3>
     <p>{excerpt}</p>
     <div class="card__foot">

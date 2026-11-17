@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'On Reading Judgments as Literature'
 subtitle: 'Style, silence, and the ethics of the reasoned decision'
 date: 2026-08-03

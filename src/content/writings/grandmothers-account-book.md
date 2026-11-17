@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'My Grandmother’s Account Book'
 subtitle: 'A biography in thirty-two pages of arithmetic'
 date: 2026-06-18

@@ -1,4 +1,5 @@
 ---
+sample: true
 title: '一個寫字的人'
 subtitle: '記陳老師'
 date: 2026-03-05

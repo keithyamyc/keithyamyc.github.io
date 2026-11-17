@@ -60,7 +60,20 @@ public/
 
 ---
 
-## 3. Adding a post
+## 3. Sample content
+
+Eleven writings, four music entries and both film rolls are demonstration
+pieces written to exercise every layout — they are marked `sample: true` in
+frontmatter and show a small **Sample** badge on the site. Delete them once
+your own pieces are in:
+
+```bash
+grep -rl "sample: true" src/content | xargs rm
+```
+
+Your own entries — *令我着迷的音乐* and the Callas review — carry no badge.
+
+## 3a. Adding a post
 
 Create a file in the right folder. The filename becomes the URL
 (`src/content/writings/my-piece.md` → `/writings/my-piece/`).
@@ -194,11 +207,9 @@ Everything personal is in **`src/config/site.ts`**:
   (this is the content of the CV page)
 - `SITE.giscus` — comments settings
 
-Two things need your attention:
-
-1. **Email** — `keith@example.com` is a placeholder.
-2. **CV bullet points** — "Chambers / Law Firm (Replace with your firm)" and
-   "University Name (Edit in src/config/site.ts)" are placeholders.
+Contact details, education, experience, leadership, languages and skills are
+all filled in. Update `CV_DATA` when something changes, then reprint the PDF
+(below).
 
 ### Regenerating the CV PDF
 

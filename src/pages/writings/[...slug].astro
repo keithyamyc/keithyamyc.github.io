@@ -61,6 +61,7 @@ const older = index >= 0 && index < all.length - 1 ? all[index + 1] : null;
           {minutes} min read
           <span class="dot"></span>
           <span class="badge">{langLabel(entry.data.lang)}</span>
+          {entry.data.sample && <span class="badge badge--accent">Sample</span>}
           {entry.data.category === 'food-reviews' && (
             <>
               <span class="dot"></span>

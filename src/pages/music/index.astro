@@ -84,10 +84,12 @@ const performers = Array.from(performerCounts.entries()).sort((a, b) => a[0].loc
 
     <div class="card-grid" data-music-list>
       {music.map((entry) => (
-        <div data-music data-type={entry.data.type}>
+        <div data-music data-type={entry.data.type}
+            sample={entry.data.sample}>
           <MusicCard
             href={`/music/${entry.id}`}
             type={entry.data.type}
+            sample={entry.data.sample}
             title={entry.data.title}
             excerpt={entry.data.excerpt}
             date={entry.data.date}

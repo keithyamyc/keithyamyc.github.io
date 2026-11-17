@@ -39,6 +39,7 @@ const music = (await getCollection('music'))
         <MusicCard
           href={`/music/${entry.id}`}
           type={entry.data.type}
+            sample={entry.data.sample}
           title={entry.data.title}
           excerpt={entry.data.excerpt}
           date={entry.data.date}

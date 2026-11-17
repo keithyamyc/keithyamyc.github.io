@@ -1,4 +1,5 @@
 ---
+sample: true
 title: 'Kyoto, in the Season of Turning'
 rollNumber: 'Roll 04'
 location: 'Kyoto & Uji, Japan'

@@ -1,4 +1,5 @@
 ---
+sample: true
 title: '專業與人情之間'
 subtitle: '關於法律人如何在制度裡保留一點溫度'
 date: 2026-07-12
