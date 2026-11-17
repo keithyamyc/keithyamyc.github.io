@@ -3,12 +3,12 @@ export const SITE = {
   subtitle: 'Essays, Commentaries, Classical Music & Film',
   description:
     'Personal website of Keith Yam — professional commentaries, legal and social essays, personal diaries, biographicals, classical music concert notes & recording reviews, and 35mm film photography.',
-  url: 'https://keithyam.github.io',
+  url: 'https://keithyamyc.github.io',
   author: 'Keith Yam',
-  location: 'Hong Kong / London',
-  email: 'keith@example.com',
+  location: 'Hong Kong',
+  email: 'yamyatch@connect.hku.hk',
   social: {
-    github: 'https://github.com/keithyam',
+    github: 'https://github.com/keithyamyc',
     instagram: 'https://instagram.com/',
     linkedin: 'https://linkedin.com/',
   },
@@ -16,7 +16,7 @@ export const SITE = {
   // Once your repo is on GitHub, visit https://giscus.app to get your repoId and categoryId
   giscus: {
     enabled: true,
-    repo: 'keithyam/keithyam.github.io', // Replace with your GitHub username/repo
+    repo: 'keithyamyc/keithyamyc.github.io', // Replace with your GitHub username/repo
     repoId: '', // Paste data-repo-id from giscus.app here to activate live GitHub comments
     category: 'Announcements',
     categoryId: '', // Paste data-category-id from giscus.app here
@@ -46,64 +46,113 @@ export const MUSIC_TYPES = [
 ] as const;
 
 export const CV_DATA = {
+  fullName: 'Yam Yat Chung Keith',
+  headline: 'BA (Literary Studies) & LLB · The University of Hong Kong',
+  availability: 'Available July 2027',
+  phone: ['+852 6581 1285', '+86 157 6734 3841'],
   summary:
-    'Legal practitioner and writer with a focus on public law, regulatory frameworks, and civic commentary. Regular contributor of essays on social issues, biographical studies, and classical music criticism.',
-  experience: [
-    {
-      role: 'Legal Practice & Advisory',
-      organization: 'Chambers / Law Firm (Replace with your firm)',
-      location: 'Hong Kong',
-      period: '2022 — Present',
-      highlights: [
-        'Advising on civil litigation, administrative and regulatory matters, and commercial disputes.',
-        'Drafting legal opinions, submissions, and comparative legal research across common law jurisdictions.',
-      ],
-    },
-    {
-      role: 'Research Assistant / Legal Researcher',
-      organization: 'Faculty of Law / Policy Institute',
-      location: 'Hong Kong / London',
-      period: '2020 — 2022',
-      highlights: [
-        'Conducted comparative research on constitutional principles, administrative law, and judicial review.',
-        'Assisted in editing academic manuscripts and policy commentaries.',
-      ],
-    },
-  ],
+    'Final-year student reading Literary Studies and Law at the University of Hong Kong, with a focus on maritime and commercial law, public international law, and legal writing. Three summers of legal experience across a shipping line, chambers, and a research assistantship. Available from July 2027.',
   education: [
     {
-      degree: 'Postgraduate Certificate in Laws (PCLL) / Master of Laws (LL.M.)',
-      institution: 'University Name (Edit in src/config/site.ts)',
-      period: '2021 — 2022',
-      details: 'Focus on Public Law, Jurisprudence, and Comparative Legal History.',
+      institution: 'The University of Hong Kong',
+      degree: 'Bachelor of Arts (Literary Studies) & Bachelor of Laws',
+      period: 'Sep 2022 – Jun 2027 (expected)',
+      location: 'Pok Fu Lam, HKSAR',
+      points: [
+        'Second Class Honours (expected).',
+        'Selected coursework: Contract Law; Commercial Law; Civil Procedure; Competition Law; Public International Law.',
+        'HKDSE Level 5* in Chinese, English and Mathematics; Sir Edward Youde Memorial Prize (2022).',
+      ],
     },
     {
-      degree: 'Bachelor of Laws (LL.B.)',
-      institution: 'University Name (Edit in src/config/site.ts)',
-      period: '2017 — 2021',
-      details: 'First / Upper Second Class Honours. Editor of the Law Review.',
+      institution: 'Dalian Maritime University',
+      degree: 'Summer Programme in Maritime Studies',
+      period: 'Jun 2025 – Jul 2025',
+      location: 'Dalian, Liaoning, China',
+      points: [
+        'Studied international maritime law and cross-border dispute resolution, with practical exposure to maritime court proceedings, arbitration institutions and ship operations.',
+      ],
+    },
+    {
+      institution: 'University of Augsburg',
+      degree: 'Summer Programme in International Business and Economic Law',
+      period: 'Jun 2024 – Jul 2024',
+      location: 'Augsburg, Bavaria, Germany',
+      points: [
+        'Selected coursework (21 ECTS credits): Independent Guarantees and Letters of Credit in International Transactions; European Company Law; Introduction to European Union Law; Transnational Litigation.',
+      ],
     },
   ],
-  writingAndInterests: [
+  experience: [
     {
-      title: 'Public Commentary & Essays',
-      description:
-        'Regular essays on legal culture, urban institutions, social issues, and culinary traditions in English and Chinese.',
+      role: 'Intern, Legal Affairs and Claims Handling Division',
+      organization: 'COSCO SHIPPING Lines',
+      location: 'Shanghai, PRC',
+      period: 'Jul 2026 – Aug 2026',
+      under: 'Under Captain Feng Chonggang',
+      points: [
+        'Reviewed and updated an internal training handbook on bills of lading by analysing the implications of the new Chinese Maritime Code and incorporating relevant domestic and international case law.',
+        "Prepared a report on the US Federal Maritime Commission's complaint procedures, examining the regulatory framework governing maritime disputes.",
+        'Researched potential reforms to the Chinese Maritime Special Procedural Law and developed relevant proposals.',
+      ],
     },
     {
-      title: 'Classical Music Criticism',
-      description:
-        'Extensive concert logs and discographical reviews focusing on Austro-German symphonic repertoire, keyboard literature, and historical recordings.',
+      role: 'Mini-pupil',
+      organization: "Sir Oswald Cheung's Chambers",
+      location: 'Central, HKSAR',
+      period: 'Jun 2025',
+      under: 'To Abel Lam',
+      points: [
+        'Conducted research on adducing additional expert opinion and probate undue influence.',
+        'Drafted a skeleton submission for an interlocutory hearing.',
+      ],
     },
     {
-      title: 'Analog Film Photography',
+      role: 'Research Assistant',
+      organization: 'Faculty of Law, The University of Hong Kong',
+      location: 'Pok Fu Lam, HKSAR',
+      period: 'May 2024 – Aug 2024',
+      under: 'To Prof Michael Ng',
+      points: [
+        'Researched US Cold War foreign policy in the Asia Pacific, with a focus on Hong Kong and China.',
+        'Analysed public archives regarding CARE operations in Hong Kong and their political implications.',
+      ],
+    },
+  ],
+  leadership: [
+    {
+      title: 'Class Representative, BA & LLB cohort',
+      period: '2022 – 2025',
       description:
-        '35mm and medium-format travel documentation across East Asia and Europe.',
+        "Served three consecutive years; gathered classmates' views on courses and curriculum and raised them at semesterly faculty meetings.",
+    },
+    {
+      title: 'Internal Secretary, Arts and Law Committee',
+      period: '2023 – 2025',
+      description:
+        'Coordinated orientation and career workshops — scheduling, venue booking, student communications and liaison with faculty.',
+    },
+    {
+      title: 'Youth Legal Development Summit — Best Essay Prize',
+      period: '2024',
+      description:
+        'Co-authored a paper on the Hong Kong Basic Law and the rule of law with three teammates; ranked first among 10 teams.',
+    },
+    {
+      title: 'Outreach and volunteering',
+      period: '2023 – 2024',
+      description:
+        'Lectured at an elderly centre on enduring power of attorney and guardianship; organised events for low-income pupils and elderly former inmates.',
     },
   ],
   languages: [
-    { name: 'English', proficiency: 'Native / Bilingual Proficiency' },
-    { name: 'Cantonese & Mandarin', proficiency: 'Native Proficiency (Traditional & Simplified Chinese)' },
-    { name: 'German / French', proficiency: 'Reading & Musical Terminology' },
+    { name: 'Cantonese & Mandarin', proficiency: 'Native' },
+    { name: 'English', proficiency: 'IELTS 8.0' },
+    { name: 'Hakka', proficiency: 'Fluent' },
+    { name: 'German & French', proficiency: 'Elementary' },
+  ],
+  skills: [
+    'Excel — pivot tables, lookup functions, IF logic, charting',
+    'Microsoft Office',
   ],
 };

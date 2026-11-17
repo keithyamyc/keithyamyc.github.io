@@ -97,7 +97,7 @@ const music = defineCollection({
         conductor: z.string().optional(),
         orchestra: z.string().optional(),
         label: z.string(),
-        catalogOrYear: z.string(),
+        catalogOrYear: z.string().optional(),
         format: z.string().optional(),
       })
       .optional(),

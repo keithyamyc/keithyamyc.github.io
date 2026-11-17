@@ -18,7 +18,7 @@ const { recording } = Astro.props;
 <div class="meta-card">
   <div class="meta-card__head">
     <span>Recording — Disc File</span>
-    <span>{recording.catalogOrYear}</span>
+    <span>{recording.catalogOrYear ?? ''}</span>
   </div>
   <dl>
     <div>

@@ -233,7 +233,7 @@ provided it shows a short setup note instead of a comment box.
 ```ts
 giscus: {
   enabled: true,
-  repo: 'keithyam/keithyam.github.io',
+  repo: 'keithyamyc/keithyamyc.github.io',
   repoId: 'R_kgDO…',
   category: 'Announcements',
   categoryId: 'DIC_kwDO…',
@@ -248,7 +248,7 @@ Comments appear at the bottom of every entry where `comments: true`.
 
 The workflow is already in `.github/workflows/deploy.yml`.
 
-1. Create a **public** repository named **`keithyam.github.io`**
+1. Create a **public** repository named **`keithyamyc.github.io`**
    (the name matters: it makes the site live at the root domain).
 2. Push this folder to it:
 
@@ -257,7 +257,7 @@ git init
 git add .
 git commit -m "Initial site"
 git branch -M main
-git remote add origin https://github.com/<your-username>/keithyam.github.io.git
+git remote add origin https://github.com/<your-username>/keithyamyc.github.io.git
 git push -u origin main
 ```
 
@@ -268,7 +268,7 @@ git push -u origin main
 If you later use a custom domain, add a `CNAME` file in `public/` with the domain,
 and update `SITE.url` and `site` in `astro.config.mjs`.
 
-> The `site` value in `astro.config.mjs` is `https://keithyam.github.io`.
+> The `site` value in `astro.config.mjs` is `https://keithyamyc.github.io`.
 > Change it if your GitHub username is different — it affects RSS and social
 > preview links.
 

@@ -1670,7 +1670,7 @@ p {
 
 .cv-item {
   display: grid;
-  grid-template-columns: 8rem minmax(0, 1fr);
+  grid-template-columns: 9.5rem minmax(0, 1fr);
   gap: clamp(0.8rem, 2.5vw, 2rem);
   padding-bottom: 1.35rem;
   margin-bottom: 1.35rem;
