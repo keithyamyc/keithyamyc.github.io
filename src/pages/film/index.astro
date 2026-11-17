@@ -25,11 +25,17 @@ const frames = rolls.reduce((sum, roll) => sum + roll.data.photos.length, 0);
         the camera, and the stock.
       </p>
       <p class="small-meta" style="margin-top: 1.1rem">
-        {rolls.length} rolls
+        {rolls.length} {rolls.length === 1 ? 'roll' : 'rolls'}
         <span class="dot"></span>
         {frames} selected frames
       </p>
     </header>
+
+    {rolls.length === 0 && (
+      <p class="empty">
+        No rolls published yet. Photographs will appear here once the first roll is added.
+      </p>
+    )}
 
     <div class="card-grid">
       {rolls.map((roll) => (

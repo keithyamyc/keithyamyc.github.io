@@ -34,9 +34,8 @@ const counts = {
         <section>
           <h4>Contact</h4>
           <ul>
-            <li><a href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
-            {CV_DATA.phone.map((tel) => (
-              <li><a href={`tel:${tel.replace(/\s/g, '')}`}>{tel}</a></li>
+            {CV_DATA.emails.map((email) => (
+              <li><a href={`mailto:${email}`}>{email}</a></li>
             ))}
             {SITE.social.github && (
               <li>
@@ -58,9 +57,9 @@ const counts = {
         <section class="cv-webonly">
           <h4>On this site</h4>
           <ul>
-            <li>{counts.writings} writings</li>
-            <li>{counts.music} music entries</li>
-            <li>{counts.rolls} film rolls</li>
+            {counts.writings > 0 && <li>{counts.writings} writings</li>}
+            {counts.music > 0 && <li>{counts.music} music entries</li>}
+            {counts.rolls > 0 && <li>{counts.rolls} film rolls</li>}
           </ul>
         </section>
 

@@ -1199,6 +1199,82 @@ p {
   }
 }
 
+/* Photo essay: the photographs are the page */
+.photo-stack {
+  display: grid;
+  gap: clamp(2.2rem, 5vw, 4rem);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.stack-item {
+  margin: 0;
+}
+
+.stack-item button {
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  text-align: center;
+}
+
+.stack-item img {
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  margin-inline: auto;
+  border: 1px solid var(--rule);
+  background: var(--paper-sunk);
+  transition: opacity 0.3s var(--ease);
+}
+
+.stack-item button:hover img {
+  opacity: 0.94;
+}
+
+.stack-item figcaption {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 0.85rem;
+  max-width: 58ch;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.stack-frame {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.stack-place {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+.photo-intro {
+  max-width: 60ch;
+  margin: clamp(1.4rem, 3vw, 2.2rem) auto 0;
+  text-align: center;
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+}
+
 .prose hr {
   border: 0;
   border-top: 1px solid var(--rule);

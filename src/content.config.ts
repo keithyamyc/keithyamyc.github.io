@@ -113,6 +113,7 @@ const film = defineCollection({
     filmStock: z.string(),
     excerpt: z.string(),
     coverPhoto: z.string(),
+    layout: z.enum(['essay', 'photo']).default('essay'),
     comments: z.boolean().default(true),
     sample: z.boolean().default(false),
     photos: z.array(

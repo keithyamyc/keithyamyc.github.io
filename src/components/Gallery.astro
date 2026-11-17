@@ -11,13 +11,42 @@ interface Photo {
 interface Props {
   photos: Photo[];
   id?: string;
-  layout?: 'grid' | 'rail';
+  layout?: 'grid' | 'rail' | 'stack';
 }
 const { photos, id = 'gallery', layout = 'grid' } = Astro.props;
 ---
 
 {
-  layout === 'rail' ? (
+  layout === 'stack' ? (
+    <div class="photo-stack" data-gallery={id}>
+      {photos.map((photo, i) => (
+        <figure class="stack-item">
+          <button
+            type="button"
+            data-lightbox-index={i}
+            data-full={photo.src}
+            data-caption={photo.caption}
+            data-title={photo.frame ?? photo.title ?? ''}
+            aria-label={`Open photograph: ${photo.caption}`}
+          >
+            <img
+              src={photo.src}
+              alt={photo.caption}
+              loading={i < 2 ? 'eager' : 'lazy'}
+              decoding="async"
+            />
+          </button>
+          {(photo.caption || photo.location) && (
+            <figcaption>
+              {photo.frame && <span class="stack-frame">{photo.frame}</span>}
+              {photo.caption}
+              {photo.location && <span class="stack-place">{photo.location}</span>}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  ) : layout === 'rail' ? (
     <div class="photo-rail" data-gallery={id}>
       {photos.map((photo, i) => (
         <figure class="rail-item">

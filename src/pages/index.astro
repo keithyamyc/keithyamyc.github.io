@@ -65,6 +65,7 @@ const featured = writings.find((w) => w.data.featured);
 
     <hr class="rule--double" />
 
+    {professional.length > 0 && (
     <section style="padding-block: clamp(2.4rem, 4vw, 3.4rem)">
       <div class="section-head">
         <h2>Latest — Professional</h2>
@@ -83,7 +84,9 @@ const featured = writings.find((w) => w.data.featured);
         ))}
       </div>
     </section>
+    )}
 
+    {personal.length > 0 && (
     <section style="padding-bottom: clamp(2.4rem, 4vw, 3.4rem)">
       <div class="section-head">
         <h2>Latest — Personal</h2>
@@ -102,7 +105,9 @@ const featured = writings.find((w) => w.data.featured);
         ))}
       </div>
     </section>
+    )}
 
+    {recentMusic.length > 0 && (
     <section style="padding-bottom: clamp(2.4rem, 4vw, 3.4rem)">
       <div class="section-head">
         <h2>Music</h2>
@@ -123,6 +128,7 @@ const featured = writings.find((w) => w.data.featured);
         ))}
       </div>
     </section>
+    )}
 
     {latestRoll && (
       <section style="padding-bottom: clamp(2.4rem, 4vw, 3.4rem)">

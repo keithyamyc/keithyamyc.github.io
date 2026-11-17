@@ -60,18 +60,18 @@ public/
 
 ---
 
-## 3. Sample content
+## 3. What is published
 
-Eleven writings, four music entries and both film rolls are demonstration
-pieces written to exercise every layout — they are marked `sample: true` in
-frontmatter and show a small **Sample** badge on the site. Delete them once
-your own pieces are in:
+Only your own two music pieces are in the repository:
 
-```bash
-grep -rl "sample: true" src/content | xargs rm
+```
+src/content/music/music-that-obsesses-me.md
+src/content/music/callas-ocean.md
 ```
 
-Your own entries — *令我着迷的音乐* and the Callas review — carry no badge.
+Every demonstration entry was removed. `public/images/film/*.svg` and
+`public/images/food/*.svg` are placeholder drawings that came with the build —
+delete them once your own photographs are in `public/images/`.
 
 ## 3a. Adding a post
 
@@ -213,6 +213,19 @@ photos:
 
 A roll's `photos` render as a column beside the article rather than a gallery at
 the end, so the prose stays readable and the frames run alongside it.
+
+### Photo essays — images as the page
+
+Add `layout: photo` to a film entry and the photographs take over: full-width,
+one after another, with captions under each. Any body text becomes an optional
+short introduction above the first frame.
+
+```yaml
+layout: photo          # 'essay' (default) or 'photo'
+```
+
+Leave the body empty if you want no introduction at all; the header, the film
+strip and the photographs are enough.
 
 ### Images
 

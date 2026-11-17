@@ -6,7 +6,7 @@ export const SITE = {
   url: 'https://keithyamyc.github.io',
   author: 'Keith Yam',
   location: 'Hong Kong',
-  email: 'yamyatch@connect.hku.hk',
+  email: 'keithyam.yc@gmail.com',
   social: {
     github: 'https://github.com/keithyamyc',
     instagram: 'https://instagram.com/',
@@ -49,7 +49,8 @@ export const CV_DATA = {
   fullName: 'Yam Yat Chung Keith',
   headline: 'BA (Literary Studies) & LLB · The University of Hong Kong',
   availability: 'Available July 2027',
-  phone: ['+852 6581 1285', '+86 157 6734 3841'],
+  emails: ['keithyam.yc@gmail.com', 'yamyatch@connect.hku.hk'],
+  phone: [],
   summary:
     'Final-year student reading Literary Studies and Law at the University of Hong Kong, with a focus on maritime and commercial law, public international law, and legal writing. Three summers of legal experience across a shipping line, chambers, and a research assistantship. Available from July 2027.',
   education: [
