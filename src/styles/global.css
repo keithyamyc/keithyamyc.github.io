@@ -2183,7 +2183,30 @@ p {
   body {
     background: #fff;
     color: #111;
-    font-size: 10.5pt;
+    font-size: 9.4pt;
+    line-height: 1.48;
+  }
+  .page-head {
+    padding-top: 0;
+    margin-bottom: 10pt;
+  }
+  .cv-section {
+    padding-bottom: 10pt;
+    margin-bottom: 10pt;
+  }
+  .cv-section > h2 {
+    margin-bottom: 8pt;
+  }
+  .cv-item {
+    padding-bottom: 8pt;
+    margin-bottom: 8pt;
+    gap: 0.6rem 1.4rem;
+  }
+  .cv-item__body ul {
+    margin-top: 0.25rem;
+  }
+  .cv-item__body li {
+    margin-bottom: 0.2rem;
   }
   body::before,
   .site-header,
