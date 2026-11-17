@@ -75,6 +75,7 @@ export function readingTime(body: string): number {
 export function slugify(input: string): string {
   return input
     .toLowerCase()
+    .replace(/ł/g, 'l')
     .normalize('NFKD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[’']/g, '')
