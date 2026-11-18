@@ -2,7 +2,7 @@ export const SITE = {
   title: 'Keith Yam',
   subtitle: 'Essays, Commentaries, Classical Music & Film',
   description:
-    'Personal website of Keith Yam — professional commentaries, legal and social essays, personal diaries, biographicals, classical music concert notes & recording reviews, and 35mm film photography.',
+    'Personal website of Keith Yam — commentaries, legal and social essays, personal diaries, biographicals, classical music concert notes & recording reviews, and 35mm film photography.',
   url: 'https://keithyamyc.github.io',
   author: 'Keith Yam',
   location: 'Hong Kong',
@@ -52,7 +52,7 @@ export const CV_DATA = {
   emails: ['keithyam.yc@gmail.com', 'yamyatch@connect.hku.hk'],
   phone: [],
   summary:
-    'Final-year student reading Literary Studies and Law at the University of Hong Kong, with a focus on maritime and commercial law, public international law, and legal writing. Three summers of legal experience across a shipping line, chambers, and a research assistantship. Available from July 2027.',
+    'Final-year student reading Literary Studies and Law at the University of Hong Kong, with a focus on maritime and commercial law. Three summers of legal experience across a shipping line, chambers, and a research assistantship. Available from July 2027.',
   education: [
     {
       institution: 'The University of Hong Kong',
